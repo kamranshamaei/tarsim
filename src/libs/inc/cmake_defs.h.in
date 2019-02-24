@@ -1,0 +1,54 @@
+/****************************************************************************/
+/*
+ * @file: cmake_defs.h.in
+ *
+ * @Created on: Dec 5, 2017
+ * @Author: Kamran Shamaei
+ *
+ * @brief - This file contains definition that come from cmake
+
+ * @copyright Copyright Kamran Shamaei 
+ * All Rights Reserved.
+ *
+ * This file is subject to the terms and conditions defined in
+ * file 'LICENSE', which is part of this source code package.
+ * 
+ *
+ ****************************************************************************/
+#ifndef CMAKE_DEFS_H
+#define CMAKE_DEFS_H
+
+namespace tarsim {
+
+/**
+ * Returns tarsim software version that can be set in CMake
+ * @return Tarsim software version.
+ */
+#define TARSIM_VERSION @TARSIM_VERSION@
+const char* getTarsimVersion()
+{
+    return "@TARSIM_VERSION@";
+}
+
+/**
+ * Returns tarsim software license type that can be set in CMake
+ * @return tarsim software license type.
+ */
+#define TARSIM_LICENSE_TYPE @TARSIM_LICENSE_TYPE@
+const char* getTarsimLicenseType()
+{
+    return "@TARSIM_LICENSE_TYPE@";
+}
+
+/**
+ * Returns tarsim license owner
+ * @return tarsim license owner
+ */
+#define TARSIM_LICENSE_OWNER_NAME @TARSIM_LICENSE_OWNER_NAME@
+const char* getTarsimLicenseOwnerName()
+{
+    return "@TARSIM_LICENSE_OWNER_NAME@";
+}
+
+} // end of namespace tarsim
+#endif /* CMAKE_DEFS_H */
