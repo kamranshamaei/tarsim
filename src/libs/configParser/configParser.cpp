@@ -287,10 +287,16 @@ Errors ConfigParser::createChildren(
                         jntValue = m_rbs->mates(i).value();
                     }
 
+                    size_t index = 0;
+                    for (size_t j = 0; j < m_rbs->rigid_bodies_size(); j++) {
+                      if (childIndex == (int)m_rbs->rigid_bodies(j).index()) {
+                        index = j;
+                      }
+                    }
                     // Generate a new child (node)
                     Node* newNode = new Node(
                             currentNode,
-                            m_rbs->rigid_bodies(childIndex),
+                            m_rbs->rigid_bodies(index),
                             m_rbs->mates(i),
                             false,
                             m_configFolderName,
