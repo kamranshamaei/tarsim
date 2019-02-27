@@ -475,8 +475,10 @@ Errors Node::mateNode()
 
         if ((bearingJointType == Joint_JointType_UNKNOWN) ||
             (shaftJointType   == Joint_JointType_UNKNOWN)) {
-            LOG_FAILURE("Failed to set a side for mate %s\n",
-                    m_mateToParent.name().c_str());
+            LOG_FAILURE("Invalid joint type assigned for mate %s bearing side %d "
+                "shaft side %d node %s parent %s\n",
+                m_mateToParent.name().c_str(), (int)bearingJointType, (int)shaftJointType,
+                getName().c_str(), m_parent->getName().c_str());
             return ERR_INVALID;
         }
 
