@@ -93,6 +93,7 @@ private:
 
     std::map<JointIncCmdButtons, vtkSmartPointer<vtkImageData>> m_buttonImages;
     int32_t m_incCmd = -1;
+    double m_sliderScale = 1.0;
 
 };
 } // end of namespace tarsim

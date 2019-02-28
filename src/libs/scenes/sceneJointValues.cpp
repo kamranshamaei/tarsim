@@ -54,6 +54,10 @@ SceneJointValues::SceneJointValues(Gui* gui, Node* root):
         throw std::invalid_argument("Failed to create camera");
     }
 
+    if (gui->getWin()->joint_values_scene().slider_size_scale() > 0.0001) {
+      m_sliderScale = gui->getWin()->joint_values_scene().slider_size_scale();
+    }
+
     if (addActorsToScene() != NO_ERR) {
         throw std::invalid_argument("Failed to create actors");
     }
@@ -177,11 +181,11 @@ Errors SceneJointValues::addActorsSlidersToScene()
         sliderRep->GetPoint2Coordinate()->SetValue(0, 1);
 
 
-        sliderRep->SetSliderWidth(0.01);
-        sliderRep->SetSliderLength(0.05);
-        sliderRep->SetEndCapLength(0.005);
-        sliderRep->SetEndCapWidth(0.01);
-        sliderRep->SetTubeWidth(0.005);
+        sliderRep->SetSliderWidth(0.01 * m_sliderScale);
+        sliderRep->SetSliderLength(0.05 * m_sliderScale);
+        sliderRep->SetEndCapLength(0.005 * m_sliderScale);
+        sliderRep->SetEndCapWidth(0.01 * m_sliderScale);
+        sliderRep->SetTubeWidth(0.005 * m_sliderScale);
 
         sliderRep->GetLabelProperty()->SetVerticalJustificationToTop();
         sliderRep->GetTitleProperty()->SetVerticalJustificationToBottom();
@@ -194,8 +198,8 @@ Errors SceneJointValues::addActorsSlidersToScene()
         sliderWidget->SetInteractor(m_gui->getRenderWindowInteractor());
         sliderWidget->SetAnimationModeToAnimate();
         sliderWidget->EnabledOn();
-        sliderRep->SetTitleHeight(0.03);
-        sliderRep->SetLabelHeight(0.03);
+        sliderRep->SetTitleHeight(0.03 * m_sliderScale);
+        sliderRep->SetLabelHeight(0.03 * m_sliderScale);
 
         sliderWidget->AddObserver(vtkCommand::InteractionEvent, this,
                 &SceneJointValues::setJointValues);
@@ -319,11 +323,11 @@ Errors SceneJointValues::updateSliderActors(bool dimsChanged)
         sliderRep->GetPoint2Coordinate()->SetValue(
                 (int)((1.0 - bw - dbs) * w), (int)(h - n * ls - h_border/2.0));
 
-        sliderRep->SetSliderWidth(0.06);
-        sliderRep->SetSliderLength(0.05);
-        sliderRep->SetEndCapLength(0.02);
-        sliderRep->SetEndCapWidth(0.06);
-        sliderRep->SetTubeWidth(0.02);
+        sliderRep->SetSliderWidth(0.06 * m_sliderScale);
+        sliderRep->SetSliderLength(0.1 * m_sliderScale);
+        sliderRep->SetEndCapLength(0.02 * m_sliderScale);
+        sliderRep->SetEndCapWidth(0.06 * m_sliderScale);
+        sliderRep->SetTubeWidth(0.02 * m_sliderScale);
 
 
         sliderRep->Modified();
