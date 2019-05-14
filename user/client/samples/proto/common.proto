@@ -1,0 +1,78 @@
+// Package used. For more info, please refer to google protobuf tutorials
+syntax = "proto3";
+// Package name
+package SIM;
+
+// A transformation matrix
+message Xfm {
+    double rxx = 1;
+    double rxy = 2;
+    double rxz = 3;
+    double tx  = 4;
+
+    double ryx = 5;
+    double ryy = 6;
+    double ryz = 7;
+    double ty  = 8;
+
+    double rzx = 9;
+    double rzy = 10;
+    double rzz = 11;
+    double tz  = 12;
+}
+
+// A vector
+message Vector {
+    double x = 1;
+    double y = 2;
+    double z = 3;
+}
+
+// A plane that can be shown in space
+message Plane {
+    // The place center position
+    Vector center = 1;
+
+    // A vector that defines the first dimension of the plane
+    Vector u = 2;
+
+    // A vector that defines the second dimension of the plane
+    Vector v = 3;
+
+    // The plane color
+    Color color = 4;
+
+    // The plane opacity. 1.0 is fully opaque, 0.0 is fully transparent.
+    double opacity = 5;
+}
+
+// A Coordinate frame that could be displayed in the simulator
+message CoordinateFrame {
+    // Frame index
+    int32 index = 1;
+
+    // Frame name (e.g. end-effector frame)
+    string name = 2;
+
+    // Transformation matrix
+    Xfm xfm = 3;
+
+    // Length of the frame axes
+    double length = 4;
+
+    // Radius of the frame axes
+    double radius = 5;
+
+    // Font size of the frame axes names
+    int32 font = 6;
+
+    // Whether this frame is the end-effector frame
+    bool is_end_effector = 7;
+}
+
+// Colors in RGB scale
+message Color {
+    double r = 1;
+    double g = 2;
+    double b = 3;
+}

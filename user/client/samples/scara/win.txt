@@ -1,0 +1,461 @@
+is_full_screen: false;
+
+company_name: "Tarsim"
+
+default_hide_frames: false
+default_hide_lines: false
+default_hide_points: false
+default_hide_path: false
+status_message_display_duration: 5.0
+
+window_size {
+    width : 1000;
+    height: 750;
+}
+
+graphics_cycle_ms: 45;
+
+lower_left_corner_position {
+    x: 300;
+    y: 100;
+}
+
+robot_scene {
+   planes {
+       center {
+           x: 0.0;
+           y: 0.0;
+           z: 0.0;
+       }
+       u {
+           x: 1500.0;
+           y: 0.0;
+           z: 0.0;
+       }
+       v {
+           x: 0.0;
+           y: 1500.0;
+           z: 0.0;
+       }
+       opacity: 0.2;
+       color {
+           r: 0.90;
+           g: 0.90;
+           b: 0.90;
+       }
+    }
+    world_frames {
+       length: 300;
+       radius: 0.007;
+    }
+    up_background_color {
+      r: 0.23;
+      g: 0.23;
+      b: 0.23;
+    }
+    down_background_color {
+      r: 0.13;
+      g: 0.13;
+      b: 0.13;
+    }
+    view_port {
+        x_min: 0.0;
+        x_max: 1.0;
+        y_min: 0.0;
+        y_max: 1.0;
+    }
+    font_color {
+        r: 1.0;
+        g: 1.0;
+        b: 1.0;  
+    }
+    font_size: 14;
+}
+
+joint_values_scene {
+    view_port {
+        x_min: 0.02;
+        x_max: 0.22;
+        y_min: 0.58;
+        y_max: 0.92;
+    }
+    is_background_transparent: true;
+    
+    buttons {
+        name: "INC"
+        on_icon_name: "inc.png"
+        opacity: 1.0
+    }
+    
+    buttons {
+        name: "DEC"
+        on_icon_name: "dec.png"
+        opacity: 1.0
+    }
+    
+    slider_color {
+	    r: 1.0;
+	    g: 1.0;
+	    b: 1.0; 
+	}
+	
+	tube_color {
+	    r: 0.643;
+	    g: 0.725;
+	    b: 0.878; 
+	}
+}
+
+end_effector_frame_scene {
+    view_port {
+        x_min: 0.01;
+        x_max: 0.21;
+        y_min: 0.08;
+        y_max: 0.28;
+    }
+    is_background_transparent: true;
+    font_color {
+        r: 1.0;
+        g: 1.0;
+        b: 1.0;  
+    }
+}
+
+speed_scene {
+    view_port {
+        x_min: 0.01;
+        x_max: 0.21;
+        y_min: 0.25;
+        y_max: 0.45;
+    }
+    is_background_transparent: true;
+    font_color {
+        r: 1.0;
+        g: 1.0;
+        b: 1.0;  
+    }
+    
+    slider_color {
+	    r: 0.8;
+	    g: 0.8;
+	    b: 0.9; 
+	}
+	
+	tube_color {
+	    r: 0.643;
+	    g: 0.735;
+	    b: 1.0; 
+	}
+}
+
+buttons_scene  {
+    up_background_color {
+      r: 0.074;
+      g: 0.074;
+      b: 0.074;
+    }
+    down_background_color {
+      r: 0.074;
+      g: 0.074;
+      b: 0.074;
+    }
+    view_port {
+        x_min: 0.0;
+        x_max: 1.0;
+        y_min: 0.93;
+        y_max: 1.0;
+    }
+    is_background_transparent: true;
+    
+    buttons {
+        name: "RESET_VIEW"
+        view_port {
+            x_min: 0.075
+            x_max: 0.125
+            y_min: 0.0
+            y_max: 1.0
+        }
+        on_icon_name: "view.png"
+        off_icon_name: "view.png"
+    }
+    
+    buttons {
+        name: "SHOW_FRAMES"
+        view_port {
+            x_min: 0.175
+            x_max: 0.225
+            y_min: 0.0
+            y_max: 1.0
+        }
+        on_icon_name: "framesOn.png"
+        off_icon_name: "framesOff.png"
+    }
+    
+    buttons {
+        name: "SHOW_PLANES"
+        view_port {
+            x_min: 0.275
+            x_max: 0.325
+            y_min: 0.0
+            y_max: 1.0
+        }
+        on_icon_name: "planesOn.png"
+        off_icon_name: "planesOff.png"
+    }
+    
+    buttons {
+        name: "SHOW_LINES"
+        view_port {
+            x_min: 0.375
+            x_max: 0.425
+            y_min: 0.0
+            y_max: 1.0
+        }
+        on_icon_name: "linesOn.png"
+        off_icon_name: "linesOff.png"
+    } 
+    
+   buttons {
+        name: "SHOW_POINTS"
+        view_port {
+            x_min: 0.475
+            x_max: 0.525
+            y_min: 0.0
+            y_max: 1.0
+        }
+        on_icon_name: "pointsOn.png"
+        off_icon_name: "pointsOff.png"
+    }
+    
+    buttons {
+        name: "SHOW_CAD"
+        view_port {
+            x_min: 0.575
+            x_max: 0.625
+            y_min: 0.0
+            y_max: 1.0
+        }
+        on_icon_name: "cadOn.png"
+        off_icon_name: "cadOff.png"
+    }
+    
+    buttons {
+        name: "SHOW_PATH"
+        view_port {
+            x_min: 0.675
+            x_max: 0.725
+            y_min: 0.0
+            y_max: 1.0
+        }
+        on_icon_name: "pathOn.png"
+        off_icon_name: "pathOff.png"
+    }
+    
+    buttons {
+        name: "RECORD"
+        view_port {
+            x_min: 0.775
+            x_max: 0.825
+            y_min: 0.0
+            y_max: 1.0
+        }
+        on_icon_name: "recordOn.png"
+        off_icon_name: "recordOff.png"
+    }
+    
+    buttons {
+        name: "EXIT"
+        view_port {
+            x_min: 0.875
+            x_max: 0.925
+            y_min: 0.0
+            y_max: 1.0
+        }
+        on_icon_name: "exit.png"
+        off_icon_name: "exit.png"
+    }
+}
+
+faults_scene  {
+    up_background_color {
+      r: 0.074;
+      g: 0.074;
+      b: 0.074;
+    }
+    down_background_color {
+      r: 0.074;
+      g: 0.074;
+      b: 0.074;
+    }
+    font_size: 15;
+    view_port {
+        x_min: 0.02;
+        x_max: 1.0;
+        y_min: 0.01;
+        y_max: 0.04;
+    }
+    font_color {
+        r: 0.807;
+        g: 0.847;
+        b: 0.933;  
+    }
+    is_background_transparent: true;
+}
+
+six_dof_scene  {
+    up_background_color {
+      r: 0.074;
+      g: 0.074;
+      b: 0.074;
+    }
+    down_background_color {
+      r: 0.074;
+      g: 0.074;
+      b: 0.074;
+    }
+    font_size: 15;
+    view_port {
+        x_min: 0.02;
+        x_max: 0.22;
+        y_min: 0.40;
+        y_max: 0.58;
+    }
+    font_color {
+        r: 0.807;
+        g: 0.847;
+        b: 0.933;  
+    }
+    is_background_transparent: true;
+    
+buttons {
+        name: "X_POSITIVE"
+        view_port {
+            x_min: 0.252
+            x_max: 0.334
+            y_min: 0.36
+            y_max: 0.64
+        }
+        on_icon_name: "dofButton.png"
+    }
+    
+    buttons {
+        name: "X_NEGATIVE"
+        view_port {
+            x_min: 0.166
+            x_max: 0.250
+            y_min: 0.36
+            y_max: 0.64
+        }
+        on_icon_name: "dofButton.png"
+    }
+    
+    buttons {
+        name: "Y_POSITIVE"
+        view_port {
+            x_min: 0.335
+            x_max: 0.50
+            y_min: 0.33
+            y_max: 0.68
+        }
+        on_icon_name: "dofButton.png"
+    }
+    
+    buttons {
+        name: "Y_NEGATIVE"
+        view_port {
+            x_min: 0.0
+            x_max: 0.17
+            y_min: 0.33
+            y_max: 0.68
+        }
+        on_icon_name: "dofButton.png"
+    }
+    
+    buttons {
+        name: "Z_POSITIVE"
+        view_port {
+            x_min: 0.15
+            x_max: 0.35
+            y_min: 0.65
+            y_max: 1.0
+        }
+        on_icon_name: "dofButton.png"
+    }
+    
+    buttons {
+        name: "Z_NEGATIVE"
+        view_port {
+            x_min: 0.15
+            x_max: 0.35
+            y_min: 0.0
+            y_max: 0.35
+        }
+        on_icon_name: "dofButton.png"
+    }
+    
+        buttons {
+        name: "ROLL_POSITIVE"
+        view_port {
+            x_min: 0.648
+            x_max: 0.85
+            y_min: 0.52
+            y_max: 0.712
+        }
+        on_icon_name: "dofButton.png"
+    }
+    
+    buttons {
+        name: "ROLL_NEGATIVE"
+        view_port {
+            x_min: 0.648
+            x_max: 0.85
+            y_min: 0.288
+            y_max: 0.48
+        }
+        on_icon_name: "dofButton.png"
+    }
+    
+    buttons {
+        name: "PITCH_POSITIVE"
+        view_port {
+            x_min: 0.636
+            x_max: 0.860
+            y_min: 0.012
+            y_max: 0.288
+        }
+        on_icon_name: "dofButton.png"
+    }
+    
+    buttons {
+        name: "PITCH_NEGATIVE"
+        view_port {
+            x_min: 0.636
+            x_max: 0.860
+            y_min: 0.712
+            y_max: 0.988
+        }
+        on_icon_name: "dofButton.png"
+    }
+    
+    buttons {
+        name: "YAW_POSITIVE"
+        view_port {
+            x_min: 0.86
+            x_max: 0.99
+            y_min: 0.230
+            y_max: 0.712
+        }
+        on_icon_name: "dofButton.png"
+    }
+    
+    buttons {
+        name: "YAW_NEGATIVE"
+        view_port {
+            x_min: 0.508
+            x_max: 0.64
+            y_min: 0.230
+            y_max: 0.712
+        }
+        on_icon_name: "dofButton.png"
+    }   
+}

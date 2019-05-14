@@ -1,0 +1,188 @@
+// Package used. For more info, please refer to google protobuf tutorials
+syntax = "proto3";
+// Imported module
+import "common.proto";
+// Package name
+package SIM;
+
+// ***************** SIMULATOR WINDOW CONFIGURATION DATA ***********************
+// Defines all the properties of the simulator window. Note: You only need this
+// file if you would like to change the appearance of the simulator window. For
+// example, if you'd like to change the color, background color, font size, or
+// even remove a scene.
+message Window {
+    // Window size
+    WindowSize window_size = 1;
+
+    // Main robot scene where the robot will be shown
+    Scene robot_scene = 2;
+
+    // The joint scene, where the joint value sliders will be shown
+    Scene joint_values_scene = 3;
+
+    // The end-effector slider, where the end-effector frame will be shown
+    Scene end_effector_frame_scene = 4;
+
+    // The buttons scene, where the buttons will be shown
+    Scene buttons_scene = 5;
+
+    // The faults scene, where the faults will be shown
+    Scene faults_scene = 6;
+
+    // The six DOF scene, where the user can command the robot
+    Scene six_dof_scene = 7;
+
+    // The six DOF scene, where the user can command the robot
+    Scene speed_scene = 8;
+
+    // Whether the simulator is in full screen when starts up
+    bool is_full_screen = 9;
+
+    // Whether the simulator starts in maximized mode
+    bool is_maximized = 10;
+
+    // The position of the lower left corner of the simulator window
+    ScreenPosition lower_left_corner_position = 11;
+
+    // The simulator shows the end-effector origin path. This parameter specifies
+    // how many positions should be kept in the path
+    int32 default_number_of_path_points = 12;
+
+    // The size of points in end-effector path
+    double path_point_size = 13;
+
+    // The end-effector path color
+    Color path_color = 14;
+
+    // Whether the frames are hidden by default
+    bool default_hide_frames = 15;
+
+    // Whether the planes are hidden by default
+    bool default_hide_planes = 16;
+
+    // Whether the lines are hidden by default
+    bool default_hide_lines = 17;
+
+    // Whether the points are hidden by default
+    bool default_hide_points = 18;
+
+    // Whether the CAD models are hidden by default
+    bool default_hide_cad = 19;
+
+    // Whether the end-effector path is hidden by default
+    bool default_hide_path = 20;
+
+    // The user's company name
+    string company_name = 21;
+
+    // How long would it show the status message in fault scene
+    double status_message_display_duration = 23;
+
+    // How often the graphics page should be updated in ms. A very small value will
+    // slow down the computer. If no values are specified, it would be set to the
+    // default value of 40 ms
+    int32 graphics_cycle_ms = 22;
+}
+
+message Button
+{
+    // Buttons name
+    string name = 1;
+
+    // Position of lower left corner in horizontal direction (% of view port)
+    ViewPort view_port = 2;
+
+    // The name of the icon in the icons folder
+    string on_icon_name = 3;
+
+    // The name of the icon in the icons folder, only provide if the button
+    // should have two states
+    string off_icon_name = 4;
+
+    // The button opacity. 1.0 is fully opaque, 0.0 is fully transparent.
+    double opacity = 5;
+}
+
+// ************************* DEFINITION OF PARAMETERS **************************
+// All parameters of a scene. The simulator is made of a few scenes including
+// the robot scene, buttons scene, fault scene, joint value scene, etc. Each
+// scene is fully reconfigurable and designed to provide interaction with the
+// user. For example, the robot scene is where the robot is displayed. In that
+// scene the user can see, rotate, zoom in/out, and drag the robot. In the
+// joint values scene, the user can change the robot joint values
+message Scene {
+    // The color of the upper dimension of the scene for gradient coloring
+    Color up_background_color = 1;
+
+    // The color of the lower dimension of the scene for gradient coloring
+    Color down_background_color = 2;
+
+    // Scene rectangle data
+    ViewPort view_port = 3;
+
+    // Where the world frame is in the scene. Only used for the robot scene.
+    // This typically should be identity
+    repeated CoordinateFrame world_frames = 6;
+
+    // Planes to show in the robot scene
+    repeated Plane planes = 7;
+
+    // Font color of the scene
+    Color font_color = 8;
+
+    // Font size of the scene
+    int32 font_size = 9;
+
+    // The precision of the numbers shown in the scene
+    int32 data_precision = 10;
+
+    // Whether the background of the scene is transparent
+    bool is_background_transparent = 11;
+
+    // If the scene has buttons, their parameters are stored here
+    repeated Button buttons = 12;
+
+    // Slider button color, if there is any
+    Color slider_color = 13;
+
+    // Slider tube color, if there is any
+    Color tube_color = 14;
+    
+    // Slider size scale
+    double slider_size_scale = 15;
+}
+
+// The window size in pixels
+message WindowSize {
+    // The window width
+    int32 width = 1;
+
+    // The window height
+    int32 height = 2;
+}
+
+// A position in screen in pixels
+message ScreenPosition {
+    // Position in horizontal direction
+    int32 x = 1;
+
+    // Position in vertical direction
+    int32 y = 2;
+}
+
+// A rectangle on screen in pixels. This can be used to specify a scene on screen
+message ViewPort {
+    // Position of lower left corner in horizontal direction
+    double x_min = 1;
+
+    // Position of lower right corner in horizontal direction
+    double x_max = 2;
+
+    // Position of lower left corner in vertical direction
+    double y_min = 3;
+
+    // Position of lower right corner in vertical direction
+    double y_max = 4;
+}
+
+
