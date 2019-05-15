@@ -8,7 +8,7 @@ mkdir "$TEMP_FOLDER"
 # Build and install VTK
 mkdir "$TEMP_FOLDER/vtk-build"
 
-( cd "$TEMP_FOLDER/vtk-build" && cmake -DCMAKE_BUILD_TYPE:STRING=Release -DVTK_Group_Qt:BOOL=true "$PACKAGE_FOLDER/vtk/8.1.0/src")
+( cd "$TEMP_FOLDER/vtk-build" && cmake -DCMAKE_BUILD_TYPE:STRING=Release -DVTK_Group_Qt:BOOL=false "$PACKAGE_FOLDER/vtk/8.1.0/src")
 
 ( cd "$TEMP_FOLDER/vtk-build" && sudo make -j8 install)
 
