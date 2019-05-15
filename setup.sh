@@ -14,6 +14,6 @@ mkdir "$TEMP_FOLDER/vtk-build"
 
 rm -r "$TEMP_FOLDER"
 
-echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/tarsim/lib' >> ~/.bashrc
+echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/tarsim/lib:/usr/lib/include' >> ~/.bashrc
 
 source ~/.bashrc
