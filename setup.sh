@@ -12,7 +12,7 @@ mkdir "$TEMP_FOLDER/vtk-build"
 
 ( cd "$TEMP_FOLDER/vtk-build" && sudo make -j8 install)
 
-rm -r "$TEMP_FOLDER"
+rm -rf "$TEMP_FOLDER"
 
 echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/tarsim/lib:/usr/lib/include:/usr/local/lib' >> ~/.bashrc
 
