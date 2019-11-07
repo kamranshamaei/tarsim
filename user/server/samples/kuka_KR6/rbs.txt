@@ -1,0 +1,705 @@
+index: 0;
+name: "KR6";
+should_start_with_previous_joint_values: false;
+control_cycle: 10;
+control_cycle_tolerance: 5;
+
+collision_detection {
+    is_active: true;
+}
+
+camera {
+    position {
+        x: 4000;
+        y: 4000;
+        z: 2500;
+    }
+
+    focal_point {
+        x: 0;
+        y: 0;
+        z: 800;
+    }
+
+    clipping_range {
+        min: 0.1;
+        max: 10000.0;
+    }
+
+    view_up {
+        x: 0.0;
+        y: 0.0;
+        z: 1.0;
+    }
+}
+
+# Base 0
+rigid_bodies {
+    index: 0;
+    name: "Base";
+    is_fixed: true;
+
+    appearance {
+        cad {
+            path: "Base.STL";
+            xfm_cad_to_rigid_body {
+                rxx: 1.0;
+                rxy: 0.0;
+                rxz: 0.0;
+                tx : 0.0;
+
+                ryx: 0.0;
+                ryy: 1.0;
+                ryz: 0.0;
+                ty : 0.0;
+
+                rzx: 0.0;
+                rzy: 0.0;
+                rzz: 1.0;
+                tz : 0.0;                
+            }
+            color {
+                r: 0.4;
+                g: 0.4;
+                b: 0.4;
+            }
+            opacity: 1.0;
+        }
+    }
+
+    xfm_rigid_body_to_world {
+        rxx: 1.0;
+        rxy: 0.0;
+        rxz: 0.0;
+        tx : 0.0;
+
+        ryx: 0.0;
+        ryy: 1.0;
+        ryz: 0.0;
+        ty : 0.0;
+
+        rzx: 0.0;
+        rzy: 0.0;
+        rzz: 1.0;
+        tz : 0.0;
+        
+    }
+
+    joints {
+        index: 0;
+        name: "First";
+        xfm_joint_to_rigid_body {
+            rxx: 1.0;
+            rxy: 0.0;
+            rxz: 0.0;
+            tx : 0.0;
+
+            ryx: 0.0;
+            ryy: 1.0;
+            ryz: 0.0;
+            ty : 0.0;
+
+            rzx: 0.0;
+            rzy: 0.0;
+            rzz: 1.0;
+            tz : 396.92;
+        }
+        Joint_type: REVOLUTE;
+    }
+}
+
+# Link_1
+rigid_bodies {
+    index: 1;
+    name: "Link_1";
+
+    appearance {
+        cad {
+            path: "Link_1.STL";
+            xfm_cad_to_rigid_body {
+                rxx: 1.0;
+                rxy: 0.0;
+                rxz: 0.0;
+                tx : 0.0;
+
+                ryx: 0.0;
+                ryy: 1.0;
+                ryz: 0.0;
+                ty : 0.0;
+
+                rzx: 0.0;
+                rzy: 0.0;
+                rzz: 1.0;
+                tz : 0.0;                
+            }
+            color {
+                r: 1.0;
+                g: 0.56;
+                b: 0.0;
+            }
+            opacity: 1.0;
+        }
+    }
+
+    joints {
+        index: 0;
+        name: "First";
+        xfm_joint_to_rigid_body {
+            rxx: 1.0;
+            rxy: 0.0;
+            rxz: 0.0;
+            tx : 0.0;
+
+            ryx: 0.0;
+            ryy: 1.0;
+            ryz: 0.0;
+            ty : 0.0;
+
+            rzx: 0.0;
+            rzy: 0.0;
+            rzz: 1.0;
+            tz : 0.0;
+        }
+        Joint_type: REVOLUTE;
+    }
+    
+    joints {
+        index: 1;
+        name: "Second";
+        xfm_joint_to_rigid_body {
+            rxx: 0.0;
+            rxy: 0.0;
+            rxz: 1.0;
+            tx : 83.0;
+
+            ryx: 1.0;
+            ryy: 0.0;
+            ryz: 0.0;
+            ty : 260.0;
+
+            rzx: 0.0;
+            rzy: 1.0;
+            rzz: 0.0;
+            tz : 278.08;
+        }
+        Joint_type: REVOLUTE;
+    }
+}
+
+# Link_2
+rigid_bodies {
+    index: 2;
+    name: "Link_2";
+    
+    appearance {
+        cad {
+            path: "Link_2.STL";
+            xfm_cad_to_rigid_body {
+                rxx: 1.0;
+                rxy: 0.0;
+                rxz: 0.0;
+                tx : 0.0;
+
+                ryx: 0.0;
+                ryy: 1.0;
+                ryz: 0.0;
+                ty : 0.0;
+
+                rzx: 0.0;
+                rzy: 0.0;
+                rzz: 1.0;
+                tz : 0.0;                
+            }
+            color {
+                r: 1.0;
+                g: 0.56;
+                b: 0.0;
+            }
+            opacity: 1.0;
+        }
+    }
+
+    joints {
+        index: 0;
+        name: "First";
+        xfm_joint_to_rigid_body {
+            rxx: 1.0;
+            rxy: 0.0;
+            rxz: 0.0;
+            tx : 0.0;
+
+            ryx: 0.0;
+            ryy: 1.0;
+            ryz: 0.0;
+            ty : 0.0;
+
+            rzx: 0.0;
+            rzy: 0.0;
+            rzz: 1.0;
+            tz : 0.0;
+        }
+        Joint_type: REVOLUTE;
+    }
+    
+    joints {
+        index: 1;
+        name: "Second";
+        xfm_joint_to_rigid_body {
+            rxx: 1.0;
+            rxy: 0.0;
+            rxz: 0.0;
+            tx : 0.0;
+
+            ryx: 0.0;
+            ryy: -1.0;
+            ryz: 0.0;
+            ty : 680.0;
+
+            rzx: 0.0;
+            rzy: 0.0;
+            rzz: -1.0;
+            tz : 34.0;
+        }
+        Joint_type: REVOLUTE;
+    }
+}
+
+# Link_3
+rigid_bodies {
+    index: 3;
+    name: "Link_3";
+    
+    appearance {
+        cad {
+            path: "Link_3.STL";
+            xfm_cad_to_rigid_body {
+                rxx: 1.0;
+                rxy: 0.0;
+                rxz: 0.0;
+                tx : 0.0;
+
+                ryx: 0.0;
+                ryy: 1.0;
+                ryz: 0.0;
+                ty : 0.0;
+
+                rzx: 0.0;
+                rzy: 0.0;
+                rzz: 1.0;
+                tz : 0.0;                
+            }
+            color {
+                r: 1.0;
+                g: 0.56;
+                b: 0.0;
+            }
+            opacity: 1.0;
+        }
+    }
+
+    joints {
+        index: 0;
+        name: "First";
+        xfm_joint_to_rigid_body {
+            rxx: 1.0;
+            rxy: 0.0;
+            rxz: 0.0;
+            tx : 0.0;
+
+            ryx: 0.0;
+            ryy: 1.0;
+            ryz: 0.0;
+            ty : 0.0;
+
+            rzx: 0.0;
+            rzy: 0.0;
+            rzz: 1.0;
+            tz : 0.0;
+        }
+        Joint_type: REVOLUTE;
+    }
+    
+    joints {
+        index: 1;
+        name: "Second";
+        xfm_joint_to_rigid_body {
+            rxx: 1.0;
+            rxy: 0.0;
+            rxz: 0.0;
+            tx : 0.0;
+
+            ryx: 0.0;
+            ryy: 0.0;
+            ryz: 1.0;
+            ty : 403.52;
+
+            rzx: 0.0;
+            rzy: -1.0;
+            rzz: 0.0;
+            tz : 117.0;
+        }
+        Joint_type: REVOLUTE;
+    }
+}
+
+# Link_4
+rigid_bodies {
+    index: 4;
+    name: "Link_4";
+   
+    appearance {
+        cad {
+            path: "Link_4.STL";
+            xfm_cad_to_rigid_body {
+                rxx: 1.0;
+                rxy: 0.0;
+                rxz: 0.0;
+                tx : 0.0;
+
+                ryx: 0.0;
+                ryy: 1.0;
+                ryz: 0.0;
+                ty : 0.0;
+
+                rzx: 0.0;
+                rzy: 0.0;
+                rzz: 1.0;
+                tz : 0.0;                
+            }
+            color {
+                r: 1.0;
+                g: 0.56;
+                b: 0.0;
+            }
+            opacity: 1.0;
+        }
+    }
+
+    joints {
+        index: 0;
+        name: "First";
+        xfm_joint_to_rigid_body {
+            rxx: 1.0;
+            rxy: 0.0;
+            rxz: 0.0;
+            tx : 0.0;
+
+            ryx: 0.0;
+            ryy: 1.0;
+            ryz: 0.0;
+            ty : 0.0;
+
+            rzx: 0.0;
+            rzy: 0.0;
+            rzz: 1.0;
+            tz : 0.0;
+        }
+        Joint_type: REVOLUTE;
+    }
+    
+    joints {
+        index: 1;
+        name: "Second";
+        xfm_joint_to_rigid_body {
+            rxx: 1.0;
+            rxy: 0.0;
+            rxz: 0.0;
+            tx : 0.0;
+
+            ryx: 0.0;
+            ryy: 0.0;
+            ryz: -1.0;
+            ty : 52.89;
+
+            rzx: 0.0;
+            rzy: 1.0;
+            rzz: 0.0;
+            tz : 268.0;
+        }
+        Joint_type: REVOLUTE;
+    }
+}
+
+# Link_5
+rigid_bodies {
+    index: 5;
+    name: "Link_5";
+   
+    appearance {
+        cad {
+            path: "Link_5.STL";
+            xfm_cad_to_rigid_body {
+                rxx: 1.0;
+                rxy: 0.0;
+                rxz: 0.0;
+                tx : 0.0;
+
+                ryx: 0.0;
+                ryy: 1.0;
+                ryz: 0.0;
+                ty : 0.0;
+
+                rzx: 0.0;
+                rzy: 0.0;
+                rzz: 1.0;
+                tz : 0.0;                
+            }
+            color {
+                r: 1.0;
+                g: 0.56;
+                b: 0.0;
+            }
+            opacity: 1.0;
+        }
+    }
+
+    joints {
+        index: 0;
+        name: "First";
+        xfm_joint_to_rigid_body {
+            rxx: 1.0;
+            rxy: 0.0;
+            rxz: 0.0;
+            tx : 0.0;
+
+            ryx: 0.0;
+            ryy: 1.0;
+            ryz: 0.0;
+            ty : 0.0;
+
+            rzx: 0.0;
+            rzy: 0.0;
+            rzz: 1.0;
+            tz : 0.0;
+        }
+        Joint_type: REVOLUTE;
+    }
+    
+    joints {
+        index: 1;
+        name: "Second";
+        xfm_joint_to_rigid_body {
+            rxx: 0.0;
+            rxy: 1.0;
+            rxz: 0.0;
+            tx : 0.0;
+
+            ryx: 0.0;
+            ryy: 0.0;
+            ryz: 1.0;
+            ty : 108.80;
+
+            rzx: 1.0;
+            rzy: 0.0;
+            rzz: 0.0;
+            tz : 53.0;
+        }
+        Joint_type: REVOLUTE;
+    }
+}
+
+# Link_6
+rigid_bodies {
+    index: 6;
+    name: "Link_6";
+    
+    frames {
+        index: 0;
+        name: "EE";
+        length: 400;
+        radius: 0.01;
+        is_end_effector: true;
+        xfm {
+            rxx: 1.0;
+            rxy: 0.0;
+            rxz: 0.0;
+            tx : 0.0;
+
+            ryx: 0.0;
+            ryy: 1.0;
+            ryz: 0.0;
+            ty : 0.0;
+
+            rzx: 0.0;
+            rzy: 0.0;
+            rzz: 1.0;
+            tz : 0.0;
+        }
+    }
+
+    appearance {
+        cad {
+            path: "Link_6.STL";
+            xfm_cad_to_rigid_body {
+                rxx: 1.0;
+                rxy: 0.0;
+                rxz: 0.0;
+                tx : 0.0;
+
+                ryx: 0.0;
+                ryy: 1.0;
+                ryz: 0.0;
+                ty : 0.0;
+
+                rzx: 0.0;
+                rzy: 0.0;
+                rzz: 1.0;
+                tz : 0.0;                
+            }
+            color {
+                r: 1.0;
+                g: 0.56;
+                b: 0.0;
+            }
+            opacity: 1.0;
+        }
+    }
+
+    joints {
+        index: 0;
+        name: "First";
+        xfm_joint_to_rigid_body {
+            rxx: 1.0;
+            rxy: 0.0;
+            rxz: 0.0;
+            tx : 0.0;
+
+            ryx: 0.0;
+            ryy: 1.0;
+            ryz: 0.0;
+            ty : 0.0;
+
+            rzx: 0.0;
+            rzy: 0.0;
+            rzz: 1.0;
+            tz : 0.0;
+        }
+        Joint_type: REVOLUTE;
+    }
+}
+
+mates {
+    index: 0;
+    name: "J0";
+    is_limited: true;
+    min: -180;
+    max: 180;
+    value: 0.0;
+    angular_offset: 90;
+
+    sides {
+        rigid_body_index: 0;
+        joint_index: 0;
+    }
+
+    sides {
+        rigid_body_index: 1;
+        joint_index: 0;
+    }
+    
+    is_velocity_limited: true;
+    min_velocity: -60.0;
+    max_velocity:  60.0;
+    
+    is_acceleration_limited: true;
+    min_acceleration: -0.1;
+    max_acceleration:  0.1;
+}
+
+mates {
+    index: 1;
+    name: "J1";
+    is_limited: true;
+    min: -180;
+    max: 180;
+    value: 0.0;
+
+
+    sides {
+        rigid_body_index: 1;
+        joint_index: 1;
+    }
+
+    sides {
+        rigid_body_index: 2;
+        joint_index: 0;
+    }
+}
+
+mates {
+    index: 2;
+    name: "J2";
+    is_limited: true;
+    min: -180;
+    max: 180;
+    value: 0.0;
+    angular_offset: 80;
+
+    sides {
+        rigid_body_index: 2;
+        joint_index: 1;
+    }
+
+    sides {
+        rigid_body_index: 3;
+        joint_index: 0;
+    }
+}
+
+mates {
+    index: 3;
+    name: "J3";
+    is_limited: true;
+    min: -180;
+    max: 180;
+    value: 0;
+    angular_offset: 0;
+
+    sides {
+        rigid_body_index: 3;
+        joint_index: 1;
+    }
+
+    sides {
+        rigid_body_index: 4;
+        joint_index: 0;
+    }
+}
+
+mates {
+    index: 4;
+    name: "J4";
+    is_limited: true;
+    min: -115;
+    max: 115;
+    value: 0;
+
+    sides {
+        rigid_body_index: 4;
+        joint_index: 1;
+    }
+
+    sides {
+        rigid_body_index: 5;
+        joint_index: 0;
+    }
+}
+
+mates {
+    index: 5;
+    name: "J5";
+    is_limited: true;
+    min: -180;
+    max: 180;
+    value: 0;
+
+    sides {
+        rigid_body_index: 5;
+        joint_index: 1;
+    }
+
+    sides {
+        rigid_body_index: 6;
+        joint_index: 0;
+    }
+}
