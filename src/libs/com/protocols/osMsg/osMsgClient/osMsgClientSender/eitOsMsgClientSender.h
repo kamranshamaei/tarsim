@@ -88,6 +88,9 @@ public:
     bool sendRequestSimulatorStatus(
             SimulatorStatus_t &msg,
             unsigned int msgPriority = DEFAULT_MSG_PRIORITY);
+    bool sendRequestInstallTool(
+        RequestInstallTool_t &msg,
+        unsigned int msgPriority = DEFAULT_MSG_PRIORITY);
 
     virtual ~EitOsMsgClientSender();
 

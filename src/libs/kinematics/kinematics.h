@@ -76,6 +76,8 @@ public:
     Errors getJointValues(std::map<int, double> &jointValues);
 
     std::map<int, Object*> getObjects();
+
+    Errors installTool();
     // MEMBERS
 private:
     // FUNCTIONS
@@ -139,6 +141,8 @@ private:
     CollisionDetection m_cd;
 
     std::map<int32_t, Collision> m_collisions;
+
+    Object* m_tool = nullptr;
 };
 } // end of namespace tarsim
 // ENDIF

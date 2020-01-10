@@ -26,6 +26,7 @@
 #include "node.h"
 #include "rbs.pb.h"
 #include "win.pb.h"
+#include "object.h"
 #include <mutex>
 #include <fstream>
 namespace tarsim {
@@ -49,6 +50,8 @@ public:
     Node* getEndEffectorNode();
     unsigned int getEndEffectorFrameNumber();
     std::string getConfigFolderName() {return m_configFolderName;}
+    Errors loadTool(const std::string &toolName);
+    Object* getTool() {return m_tool;}
 
     // MEMBERS
 private:
@@ -72,6 +75,7 @@ private:
 
     // MEMBERS
     RigidBodySystem* m_rbs = nullptr;
+    Object* m_tool = nullptr;
     Window* m_win = nullptr;
     Node* m_root = nullptr;
     Node* m_endEffectorNode = nullptr;

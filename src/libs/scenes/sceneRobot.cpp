@@ -109,6 +109,13 @@ Errors SceneRobot::update(bool dimsChanged)
                 return ERR_INVALID;
             }
         }
+
+        if (m_tool) {
+          if (NO_ERR != updatePlaneVisibility(m_tool, m_frameVisibility)) {
+              LOG_FAILURE("Failed to update object plane visibility");
+              return ERR_INVALID;
+          }
+        }
     }
 
     // Update planes visibility
@@ -129,6 +136,13 @@ Errors SceneRobot::update(bool dimsChanged)
                 return ERR_INVALID;
             }
         }
+
+        if (m_tool) {
+          if (NO_ERR != updatePlaneVisibility(m_tool, m_planeVisibility)) {
+              LOG_FAILURE("Failed to update object plane visibility");
+              return ERR_INVALID;
+          }
+        }
     }
 
     // Update lines visibility
@@ -147,6 +161,13 @@ Errors SceneRobot::update(bool dimsChanged)
                 LOG_FAILURE("Failed to update object line visibility");
                 return ERR_INVALID;
             }
+        }
+
+        if (m_tool) {
+          if (NO_ERR != updateLinesVisibility(m_tool, m_linesVisibility)) {
+              LOG_FAILURE("Failed to update object line visibility");
+              return ERR_INVALID;
+          }
         }
     }
 
@@ -167,6 +188,13 @@ Errors SceneRobot::update(bool dimsChanged)
                 return ERR_INVALID;
             }
         }
+
+        if (m_tool) {
+          if (NO_ERR != updatePointsVisibility(m_tool, m_pointsVisibility)) {
+              LOG_FAILURE("Failed to update object point visibility");
+              return ERR_INVALID;
+          }
+        }
     }
 
     // Update cad visibility
@@ -186,6 +214,13 @@ Errors SceneRobot::update(bool dimsChanged)
                 return ERR_INVALID;
             }
         }
+
+        if (m_tool) {
+          if (NO_ERR != updateCadVisibility(m_tool, m_cadVisibility)) {
+              LOG_FAILURE("Failed to update object cad visibility");
+              return ERR_INVALID;
+          }
+        }
     }
 
     if (dimsChanged) {
@@ -200,6 +235,13 @@ Errors SceneRobot::update(bool dimsChanged)
         if (NO_ERR != updateTreeActors(m_root)) {
             LOG_FAILURE("Failed to update tree actors");
             return ERR_INVALID;
+        }
+
+        if (m_tool) {
+            if (NO_ERR != m_tool->getActorsRigidBody()->updateNodeActors()) {
+                LOG_FAILURE("Failed to update actors for tool");
+                return ERR_INVALID;
+            }
         }
 
         if (NO_ERR != updateObjectsActors()) {
@@ -230,6 +272,7 @@ Errors SceneRobot::updateTreeActors(Node* node)
     for (unsigned int i = 0; i < node->getChildren().size(); i++) {
         if (NO_ERR != updateTreeActors(node->getChildren().at(i))) {
             LOG_FAILURE("Failed to update actors");
+            return ERR_INVALID;
         }
     }
 
@@ -800,6 +843,76 @@ Errors SceneRobot::updateObjectsActors()
     return NO_ERR;
 }
 
+Errors SceneRobot::installTool(Object* object)
+{
+    if (NO_ERR != addActorsPlanesToScene(object)) {
+        LOG_FAILURE("Failed to add planes actors to the scene for object %s",
+                object->getName().c_str());
+        return ERR_INVALID;
+    }
+
+    if (NO_ERR != addActorsLinesToScene(object)) {
+        LOG_FAILURE("Failed to add lines actors to the scene for object %s",
+                object->getName().c_str());
+        return ERR_INVALID;
+    }
+
+    if (NO_ERR != addActorsPointsToScene(object)) {
+        LOG_FAILURE("Failed to add points actors to the scene for object %s",
+                object->getName().c_str());
+        return ERR_INVALID;
+    }
+
+    if (NO_ERR != addActorCadToScene(object)) {
+        LOG_FAILURE("Failed to add cad actor to the scene for object %s",
+                object->getName().c_str());
+        return ERR_INVALID;
+    }
+
+    if (NO_ERR != addActorFramesToScene(object)) {
+        LOG_FAILURE("Failed to add frame actors to the scene for object %s",
+                object->getName().c_str());
+        return ERR_INVALID;
+    }
+
+    m_tool = object;
+
+    return NO_ERR;
+}
+
+Errors SceneRobot::removeTool()
+{
+    if (m_tool) {
+      for (size_t i = 0; i < m_tool->getActorsRigidBody()->getActorCad().size(); i++) {
+        m_tool->getActorsRigidBody()->getActorCad()[i]->VisibilityOff();
+      }
+      m_tool->getActorsRigidBody()->getActorCad().clear();
+
+      for (size_t i = 0; i < m_tool->getActorsRigidBody()->getActorsFrames().size(); i++) {
+        m_tool->getActorsRigidBody()->getActorsFrames()[i]->VisibilityOff();
+      }
+      m_tool->getActorsRigidBody()->getActorsFrames().clear();
+
+      for (size_t i = 0; i < m_tool->getActorsRigidBody()->getActorsLines().size(); i++) {
+        m_tool->getActorsRigidBody()->getActorsLines()[i]->VisibilityOff();
+      }
+      m_tool->getActorsRigidBody()->getActorsLines().clear();
+
+      for (size_t i = 0; i < m_tool->getActorsRigidBody()->getActorsPlanes().size(); i++) {
+        m_tool->getActorsRigidBody()->getActorsPlanes()[i]->VisibilityOff();
+      }
+      m_tool->getActorsRigidBody()->getActorsPlanes().clear();
+
+      for (size_t i = 0; i < m_tool->getActorsRigidBody()->getActorsPoints().size(); i++) {
+        m_tool->getActorsRigidBody()->getActorsPoints()[i]->VisibilityOff();
+      }
+      m_tool->getActorsRigidBody()->getActorsPoints().clear();
+    }
+
+    m_tool = nullptr;
+
+    return NO_ERR;
+}
 
 } // end of namespace tarsim
 

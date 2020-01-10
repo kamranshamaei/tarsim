@@ -58,6 +58,8 @@ private:
 	void updateRobotJointPosition(
 	            EitOsMsgServerSender *sendUserReply, const JointPosition_t& pos);
 
+  void installTool(RequestInstallTool_t &msg);
+
 	TimerUtils *m_runTimer = nullptr;
 	Kinematics* m_kinematics = nullptr;
 	Gui* m_gui = nullptr;

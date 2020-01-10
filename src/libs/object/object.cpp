@@ -169,6 +169,21 @@ std::vector<BoundingBoxBase*>* Object::getBbs()
     return &m_bbs;
 }
 
+void Object::updateFrames(const Matrix4d &m)
+{
+    for (int i = 0; i < m_externalObject.frames_size(); i++) {
+      Xfm xfm = m_externalObject.frames(i).xfm();
+      Matrix4d n;
+      n <<
+              xfm.rxx(), xfm.rxy(), xfm.rxz(), xfm.tx(),
+              xfm.ryx(), xfm.ryy(), xfm.ryz(), xfm.ty(),
+              xfm.rzx(), xfm.rzy(), xfm.rzz(), xfm.tz(),
+                    0.0,       0.0,       0.0,      1.0;
+
+      m_frames[i] = m * n;
+    }
+}
+
 } // end of namespace tarsim
 
 

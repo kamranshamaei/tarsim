@@ -201,6 +201,15 @@ struct RequestJointValues_t : MessageHeader_t
 };
 
 /**
+ * Message type used for communication of requesting all robot joint values
+ */
+struct RequestInstallTool_t : MessageHeader_t
+{
+  char toolName[MAX_STATUS_TEXT_SIZE];
+};
+
+
+/**
  * Message type used for communication of requesting simulator to shutdown
  */
 struct RequestShutdown_t : MessageHeader_t
@@ -308,7 +317,8 @@ enum SimulatorMessageId_t
 
     GUI_STATUS_MESSAGE,
     SIMULATOR_STATUS,
-    SHUTDOWN
+    SHUTDOWN,
+    INSTALL_TOOL
 };
 } // end of namespace tarsim
 #endif /* SRC_LIBS_INC_SIMULATOR_MESSAGES_H_ */

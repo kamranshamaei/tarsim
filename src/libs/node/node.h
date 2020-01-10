@@ -97,7 +97,7 @@ public:
 
     double getGearRatio() const;
 
-    void updateFrames(const Matrix4d &m);
+    virtual void updateFrames(const Matrix4d &m);
     Errors getFrame(unsigned int i, Matrix4d &m) const;
 
     ActorsRigidBody* getActorsRigidBody();

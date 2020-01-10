@@ -27,6 +27,7 @@
 #include "eitErrors.h"
 #include "configParser.h"
 #include "kinematics.h"
+#include "node.h"
 
 #include "vtkRenderWindow.h"
 #include "vtkRenderer.h"
@@ -70,6 +71,8 @@ public:
         float focalPoint[3],
         float viewUp[3],
         float clippingRange[2]);
+    virtual Errors installTool(Object* tool) {return NO_ERR;}
+    virtual Errors removeTool() {return NO_ERR;}
 
     // MEMBERS
 

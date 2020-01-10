@@ -25,6 +25,7 @@
 //INCLUDES
 #include "sceneBase.h"
 #include "node.h"
+#include "object.h"
 #include "vtkAxesActor.h"
 #include "vtkTextActor.h"
 #include "vtkCellArray.h"
@@ -44,6 +45,8 @@ public:
     virtual ~SceneRobot() = default;
 
     Errors update(bool dimsChanged = false) override;
+    virtual Errors installTool(Object* tool) override;
+    virtual Errors removeTool() override;
 
     // MEMBERS
 
@@ -93,6 +96,7 @@ private:
     bool m_linesVisibility = true;
     bool m_cadVisibility = true;
     Camera m_cameraConfig;
+    Object* m_tool = nullptr;
 
     std::map<int, vtkSmartPointer<vtkActor>> m_selfCollisionActors;
 };
