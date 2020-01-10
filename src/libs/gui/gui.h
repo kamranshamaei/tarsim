@@ -49,6 +49,7 @@ class SceneBase;
 class Kinematics;
 template<typename Type> class ThreadQueue;
 class EitOsMsgServerReceiver;
+class Object;
 
 // TYPEDEFS AND DEFINES
 
@@ -128,6 +129,9 @@ public:
 
     EitOsMsgServerReceiver* getEitOsMsgServerReceiver();
     void setEitOsMsgServerReceiver(EitOsMsgServerReceiver* eitOsMsgServerReceiver);
+
+    Errors installTool(Object* tool);
+    Errors removeTool();
     // MEMBERS
 
 private:
@@ -202,7 +206,7 @@ private:
 
     int m_windowSize[2] = {0, 0};
 
-    vtkSmartPointer<vtkMutexLock> m_destroy =
+    vtkSmartPointer<vtkMutexLock> m_updateLock =
         vtkSmartPointer<vtkMutexLock>::New();
 
     EitOsMsgServerReceiver* m_eitOsMsgServerReceiver = nullptr;
@@ -210,6 +214,7 @@ private:
     const char* c_idleText = "";
 
     bool m_isDestroying = false;
+
 };
 } // end of namespace tarsim
 // ENDIF

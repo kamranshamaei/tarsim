@@ -392,5 +392,19 @@ std::vector<std::pair<int32_t, int32_t>> TarsimClient::getExternalCollisions()
     return m_eitOsMsgClientReceiver->getExternalCollisions();
 }
 
+bool TarsimClient::installTool(const std::string &name)
+{
+    RequestInstallTool_t out;
+    out.msgCounter = getMsgStamp();
+
+    strncpy(out.toolName, name.c_str(), sizeof(out.toolName));
+    out.toolName[MAX_STATUS_TEXT_SIZE - 1] = '\0';
+
+    if (!m_eitOsMsgClientSender->sendRequestInstallTool(out)) {
+        printf("Failed to request tool install\n");
+        return false;
+    }
+    return true;
+}
 
 } // end of namespace tarsim

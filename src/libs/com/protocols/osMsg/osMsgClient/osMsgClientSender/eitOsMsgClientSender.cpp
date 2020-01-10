@@ -379,4 +379,21 @@ bool EitOsMsgClientSender::sendFaultMessage(
     return true;
 }
 
+bool EitOsMsgClientSender::sendRequestInstallTool(
+    RequestInstallTool_t &msg, unsigned int msgPriority)
+{
+    if (!isConnected()) {return false;}
+
+    msg.msgId = INSTALL_TOOL;
+    msg.srcPid = FileSystem::getPid();
+
+    if (m_msgSender.send(&msg, sizeof(msg), msgPriority) != NO_ERR)
+    {
+        printf ("Failed to send data to RobotServer\n");
+        return false;
+    }
+
+    return true;
+}
+
 } // end of namespace tarsim

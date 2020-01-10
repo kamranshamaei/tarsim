@@ -94,7 +94,7 @@ Errors Kinematics::executeForwardKinematics(
     if (NO_ERR != calculateChildrenXfm(m_root, m)) {
 	    LOG_FAILURE("Failed to calculate forward kinematics");
 	    return ERR_INVALID;
-	}
+	  }
 
     if (NO_ERR != calculateObjectsXfm()) {
         LOG_FAILURE("Failed to calculate objects xfm");
@@ -107,11 +107,19 @@ Errors Kinematics::executeForwardKinematics(
             updateCurrentXfms(m_root);
             m_collisions.clear();
             setXfmEndEffector(m);
+            if (m_tool) {
+                m_tool->setXfm(m);
+                m_tool->updateFrames(m);
+            }
         }
     } else {
         updateCurrentJointValues(m_root);
         updateCurrentXfms(m_root);
         setXfmEndEffector(m);
+        if (m_tool) {
+            m_tool->setXfm(m);
+            m_tool->updateFrames(m);
+        }
     }
 
     collisions = m_collisions;
@@ -129,7 +137,7 @@ Errors Kinematics::executeForwardKinematics(
     statusMessage = extractStatusMessage(jvDuration, fkDuration);
 
     m_timePreviousJointValues = t1;
-	return NO_ERR;
+	  return NO_ERR;
 }
 
 bool Kinematics::isCollisionDetected()
@@ -407,6 +415,11 @@ Matrix4d Kinematics::getXfmEndEffector()
 {
     std::unique_lock<std::mutex> lock(m_mutexXfmEndEffector);
     Matrix4d m = m_xfmEndEffector;
+    if (m_tool) {
+        if (NO_ERR != m_tool->getFrame(0, m)) {
+          return m_tool->getXfm();
+        }
+    }
     return m;
 }
 
@@ -731,6 +744,13 @@ Errors Kinematics::getNodeJointValue(
 std::map<int, Object*> Kinematics::getObjects()
 {
     return m_mapObjects;
+}
+
+Errors Kinematics::installTool()
+{
+    m_tool = m_cp->getTool();
+    incCounter();
+    return NO_ERR;
 }
 
 } // end of namespace tarsim

@@ -61,7 +61,7 @@ Node::Node(
     }
 
     if (mateNode() != NO_ERR) {
-    	throw std::invalid_argument("Failed to mate current node");
+      throw std::invalid_argument("Failed to mate current node");
     }
 
     if (m_parent != nullptr) {
@@ -127,6 +127,9 @@ Node::~Node()
         m_bbs[i] = nullptr;
     }
     m_bbs.clear();
+
+    delete m_actorsRigidBody;
+    m_actorsRigidBody = nullptr;
 }
 
 std::string Node::getName() const
@@ -322,8 +325,8 @@ Errors Node::verifyRigidBody(const RigidBody& rigidBody)
     }
 
     if (rigidBody.joints_size() == 0) {
-    	LOG_FAILURE("Rigid body does not have any joints");
-		return ERR_INVALID;
+        LOG_FAILURE("Rigid body does not have any joints");
+        return ERR_INVALID;
     }
 
     return NO_ERR;
@@ -556,8 +559,7 @@ Errors Node::setTargetJointValue(const double &value)
 double Node::getTargetJointValue() const
 {
     std::unique_lock<std::mutex> lock(m_mutexTargetJointValue);
-    double jointValue = m_targetJointValue;
-    return jointValue;
+    return m_targetJointValue;
 }
 
 void Node::setCurrentJointValue(const double &value)
@@ -569,8 +571,7 @@ void Node::setCurrentJointValue(const double &value)
 double Node::getCurrentJointValue() const
 {
     std::unique_lock<std::mutex> lock(m_mutexCurrentJointValue);
-    double jointValue = m_currentJointValue;
-    return jointValue;
+    return m_currentJointValue;
 }
 
 double Node::getGearRatio() const
@@ -594,7 +595,6 @@ Errors Node::getFrame(unsigned int i, Matrix4d &m) const
 {
     std::unique_lock<std::mutex> lock(m_mutexFrames);
     if (i >= m_frames.size()) {
-        LOG_FAILURE("Index exceeded the size of frames");
         return ERR_INVALID;
     }
 
@@ -613,6 +613,7 @@ Errors Node::setActorsRigidBody(ActorsRigidBody* actorsRigidBody)
         LOG_FAILURE("No actors were specified for node %", getName().c_str());
         return ERR_INVALID;
     }
+    delete m_actorsRigidBody;
     m_actorsRigidBody = actorsRigidBody;
     return NO_ERR;
 }

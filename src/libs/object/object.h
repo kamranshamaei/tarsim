@@ -67,6 +67,8 @@ public:
 
     std::vector<BoundingBoxBase*>* getBbs();
 
+    virtual void updateFrames(const Matrix4d &m) override;
+
     // MEMBERS
 
 private:

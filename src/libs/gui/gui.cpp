@@ -19,6 +19,7 @@
 //INCLUDES
 #include "gui.h"
 #include "node.h"
+#include "object.h"
 #include "configParser.h"
 #include "kinematics.h"
 #include "sceneBase.h"
@@ -159,12 +160,12 @@ void Gui::stop(
 
 void Gui::destroy()
 {
-    m_destroy->Lock();
+    m_updateLock->Lock();
     m_isDestroying = true;
 
     m_renderWindowInteractor->TerminateApp();
 
-    m_destroy->Unlock();
+    m_updateLock->Unlock();
 }
 
 void Gui::update()
@@ -208,14 +209,14 @@ void Gui::vtkUpdate(
         long unsigned int vtkNotUsed(eventId),
         void* vtkNotUsed(callData))
 {
-    m_destroy->Lock();
+    m_updateLock->Lock();
     if (m_isDestroying) {
         return;
     }
 
     update();
     m_renderWindow->Render();
-    m_destroy->Unlock();
+    m_updateLock->Unlock();
 }
 
 Errors Gui::setupRecording()
@@ -617,6 +618,36 @@ EitOsMsgServerReceiver* Gui::getEitOsMsgServerReceiver()
 void Gui::setEitOsMsgServerReceiver(EitOsMsgServerReceiver* eitOsMsgServerReceiver)
 {
     m_eitOsMsgServerReceiver = eitOsMsgServerReceiver;
+}
+
+Errors Gui::installTool(Object* tool)
+{
+    m_updateLock->Lock();
+    if (tool->setActorsRigidBody(new ActorsRigidBody(tool))) {
+        LOG_FAILURE("Failed to create actors for tool");
+        return ERR_INVALID;
+    }
+
+    if (NO_ERR != m_scenes[ROBOT]->installTool(tool)) {
+        LOG_FAILURE("Failed to install tool in robot scene");
+        return ERR_INVALID;
+    }
+
+    m_updateLock->Unlock();
+
+    return NO_ERR;
+}
+
+Errors Gui::removeTool()
+{
+    m_updateLock->Lock();
+    if (NO_ERR != m_scenes[ROBOT]->removeTool()) {
+        LOG_FAILURE("Failed to remove tool in robot scene");
+        return ERR_INVALID;
+    }
+
+    m_updateLock->Unlock();
+    return NO_ERR;
 }
 
 } // end of namespace tarsim

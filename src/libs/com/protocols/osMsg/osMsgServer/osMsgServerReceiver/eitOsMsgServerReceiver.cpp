@@ -363,6 +363,15 @@ void EitOsMsgServerReceiver::onMessage(const GenericData_t &inComingData)
         }
         break;
 
+        case INSTALL_TOOL:
+        {
+            RequestInstallTool_t in;
+            std::memcpy(&in, &inComingData.blobOfData, sizeof(in));
+
+            installTool(in);
+        }
+        break;
+
         case MSG_TIMER_EVENT:
             LOG_INFO("Timer Event in RobotServer.....");
             break;
@@ -529,5 +538,29 @@ Errors EitOsMsgServerReceiver::sendCollision(
     return NO_ERR;
 }
 
+void EitOsMsgServerReceiver::installTool(RequestInstallTool_t &msg)
+{
+    if (m_gui->removeTool()) {
+        LOG_FAILURE("Failed to remove tool");
+        return;
+    }
+
+    std::string toolName = std::string(msg.toolName);
+    if (NO_ERR != m_cp->loadTool(toolName)) {
+        LOG_FAILURE("Failed to load tool %s", toolName.c_str());
+        return;
+    }
+
+    if (NO_ERR != m_kinematics->installTool()) {
+        LOG_FAILURE("Failed to install tool in kinematics");
+        return;
+    }
+
+    if (NO_ERR != m_gui->installTool(m_cp->getTool())) {
+        LOG_FAILURE("Failed to install tool in gui");
+        return;
+    }
+
+}
 
 } // end of namespace tarsim

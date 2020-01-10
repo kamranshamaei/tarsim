@@ -89,6 +89,9 @@ ConfigParser::ConfigParser(std::string configFolderName)
 
 ConfigParser::~ConfigParser()
 {
+    delete m_tool;
+    m_tool = nullptr;
+
     delete m_rbs;
     m_rbs = nullptr;
 
@@ -474,6 +477,27 @@ void ConfigParser::deleteNodes(Node* node, ofstream &file)
     delete node;
     node = nullptr;
 }
+
+Errors ConfigParser::loadTool(const std::string &toolName)
+{
+    std::string toolFileName = m_configFolderName + "/" + toolName;
+
+
+    ExternalObject obj;
+    if (!FileSystem::loadProtoFile(toolFileName, &obj)) {
+        LOG_FAILURE("Failed to load the simulator config data from %s",
+            toolFileName.c_str());
+        return ERR_INVALID;
+    }
+
+
+    // Generate a new child (node)
+    delete m_tool;
+    m_tool = new Object(obj, m_configFolderName);
+
+    return NO_ERR;
+}
+
 } // end of namespace tarsim
 
 

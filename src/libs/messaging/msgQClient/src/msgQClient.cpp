@@ -49,7 +49,7 @@ MsgQClient::MsgQClient(
     m_attr.mq_flags = 0;
     m_attr.mq_maxmsg = 0;
     m_attr.mq_msgsize = 0;
-    m_printingStdio = m_qName.compare(LogServerThreadName) == 0;
+    m_printingStdio = m_qName == LogServerThreadName;
     m_printingStdio = true;// because logger is not shared library - removed cross dependency
 }
 /**

@@ -164,37 +164,31 @@ Errors SceneEndEffectorFrame::addActorsEndEffectorToScene()
 
 Errors SceneEndEffectorFrame::updateActorsEndEffector()
 {
-    if (nullptr != m_endEffectorNode) {
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                int index = 4 * i + j;
-                int p_l = 2;
-                int p_a = 3;
-                if (m_scene.data_precision() > 0) {
-                    p_l = m_scene.data_precision();
-                    p_a = m_scene.data_precision();
-                }
+  Matrix4d t = m_gui->getKinematics()->getXfmEndEffector();
 
-                Matrix4d t;
-                if (NO_ERR != m_endEffectorNode->getFrame(m_endEffectorFrameNumber, t)) {
-                    LOG_FAILURE("Failed to get end effector frame");
-                    return ERR_INVALID;
-                }
+  for (int i = 0; i < 4; i++) {
+      for (int j = 0; j < 4; j++) {
+          int index = 4 * i + j;
+          int p_l = 2;
+          int p_a = 3;
+          if (m_scene.data_precision() > 0) {
+              p_l = m_scene.data_precision();
+              p_a = m_scene.data_precision();
+          }
 
-                std::ostringstream mij;
-                if ((i < 3) and (j < 3)) {
-                    mij << std::fixed << std::setprecision(p_a) << t(i, j);
-                } else if ((i < 3) && (j == 3)) {
-                    mij << std::fixed << std::setprecision(p_l) << t(i, j);
-                } else {
-                    mij << std::fixed << std::setprecision(0) << t(i, j);
-                }
+          std::ostringstream mij;
+          if ((i < 3) and (j < 3)) {
+              mij << std::fixed << std::setprecision(p_a) << t(i, j);
+          } else if ((i < 3) && (j == 3)) {
+              mij << std::fixed << std::setprecision(p_l) << t(i, j);
+          } else {
+              mij << std::fixed << std::setprecision(0) << t(i, j);
+          }
 
 
-                m_actorsEndEffector[index]->SetInput(mij.str().c_str());
-            }
-        }
-    }
+          m_actorsEndEffector[index]->SetInput(mij.str().c_str());
+      }
+  }
 
     return NO_ERR;
 }
