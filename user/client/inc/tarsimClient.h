@@ -296,6 +296,13 @@ public:
      */
     std::vector<std::pair<int32_t, int32_t>> getExternalCollisions();
 
+    /**
+     * Install a tool on the robot's end-effector link.
+     * @param name Tool's name as appear as a file in the config folder
+     * @return true if successful, false if it fails
+     */
+    bool installTool(const std::string &name);
+
 private:
     /**
      * Returns a time stamp for the message

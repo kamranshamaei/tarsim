@@ -1,0 +1,69 @@
+name: "Tool";
+xfm_object_to_world {
+    rxx: 1.0;
+    rxy: 0.0;
+    rxz: 0.0;
+    tx : 0.0;
+    
+    ryx: 0.0;
+    ryy: 1.0;
+    ryz: 0.0;
+    ty : 0.0;
+    
+    rzx: 0.0;
+    rzy: 0.0;
+    rzz: 1.0;
+    tz : 0.0;
+}
+
+frames {
+    index: 1;
+    name: "Tool";
+    length: 200;
+    radius: 0.01;
+
+    xfm {
+        rxx: 1.0;
+        rxy: 0.0;
+        rxz: 0.0;
+        tx : 0.0;
+
+        ryx: 0.0;
+        ryy: 1.0;
+        ryz: 0.0;
+        ty : 0.0;
+
+        rzx: 0.0;
+        rzy: 0.0;
+        rzz: 1.0;
+        tz : 100.0;
+    }
+}
+
+appearance {
+    cad {
+        path: "Object.STL";
+        xfm_cad_to_rigid_body {
+            rxx: 1.0;
+            rxy: 0.0;
+            rxz: 0.0;
+            tx : 0.0;
+
+            ryx: 0.0;
+            ryy: 1.0;
+            ryz: 0.0;
+            ty : 0.0;
+
+            rzx: 0.0;
+            rzy: 0.0;
+            rzz: 1.0;
+            tz : 0.0;                
+        }
+        color {
+            r: 1.0;
+            g: 1.0;
+            b: 1.0;
+        }
+        opacity: 0.5;
+    }
+}

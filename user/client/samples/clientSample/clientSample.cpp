@@ -58,6 +58,11 @@ int main(int argc, char **argv)
       return EXIT_FAILURE;
     }
 
+    if (!tc.installTool("tool.txt")) {
+      printf("Failed to install tool\n");
+      return EXIT_FAILURE;
+    }
+
     // Set up CTRL+C to terminate (optional)
     struct sigaction sigIntHandler;
     sigIntHandler.sa_handler = eventHandler;
@@ -136,7 +141,7 @@ int main(int argc, char **argv)
 
         // Get a rigid body (index of 1 for example) coordinate frame
         tarsim::Frame_t f;
-        if (!tc.getRigidBodyFrame(1, 0, f)) {
+        if (!tc.getRigidBodyFrame(4, 0, f)) {
             printf("Failed to get rigid body frame\n");
         } else {
             printFrame("Rigid Body", f.mij);
@@ -150,24 +155,24 @@ int main(int argc, char **argv)
         }
 
         // Get an object's coordinate frame. Here, object 1 is chosen as an example
-        if (!tc.getObjectFrame(1, f)) {
+        if (!tc.getObjectFrame(7, f)) {
             printf("Failed to get object frame\n");
         } else {
             printFrame("Object", f.mij);
         }
 
         // If you like to lock an object to a robot link (grasp) you can do it as:
-        tc.lockObjectToRigidBody(1, 1);
+        tc.lockObjectToRigidBody(7, 4);
 
         // If you like to unlock an object from the robot (release) you can do it as:
-        tc.unlockObjectFromRigidBody(1);
+        tc.unlockObjectFromRigidBody(7);
 
-        usleep(10000);
+        usleep(100000);
         c++;
     }
 
-    // Optional: If you like to close tarsim, you can call this
-    tc.shutdown();
+//    // Optional: If you like to close tarsim, you can call this
+//    tc.shutdown();
 
     return EXIT_SUCCESS;
 }
