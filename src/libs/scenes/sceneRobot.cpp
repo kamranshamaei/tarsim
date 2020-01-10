@@ -111,8 +111,8 @@ Errors SceneRobot::update(bool dimsChanged)
         }
 
         if (m_tool) {
-          if (NO_ERR != updatePlaneVisibility(m_tool, m_frameVisibility)) {
-              LOG_FAILURE("Failed to update object plane visibility");
+          if (NO_ERR != updateFrameVisibility(m_tool, m_frameVisibility)) {
+              LOG_FAILURE("Failed to update object frame visibility");
               return ERR_INVALID;
           }
         }
