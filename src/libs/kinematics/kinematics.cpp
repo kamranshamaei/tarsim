@@ -749,7 +749,6 @@ std::map<int, Object*> Kinematics::getObjects()
 Errors Kinematics::installTool()
 {
     m_tool = m_cp->getTool();
-    incCounter();
     return NO_ERR;
 }
 

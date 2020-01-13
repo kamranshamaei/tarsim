@@ -95,6 +95,7 @@ private:
     bool m_pointsVisibility = true;
     bool m_linesVisibility = true;
     bool m_cadVisibility = true;
+    bool m_pathVisibility = true;
     Camera m_cameraConfig;
     Object* m_tool = nullptr;
 
