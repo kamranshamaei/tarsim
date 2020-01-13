@@ -223,6 +223,17 @@ Errors SceneRobot::update(bool dimsChanged)
         }
     }
 
+    // Update end effector path visibility
+    bool pathVisibility = m_gui->getPathVisibility();
+    if (m_pathVisibility != pathVisibility) {
+      m_pathVisibility = pathVisibility;
+      if (m_pathVisibility) {
+        m_actorPath->VisibilityOn();
+      } else {
+        m_actorPath->VisibilityOff();
+      }
+    }
+
     if (dimsChanged) {
         if (NO_ERR != updateActorCompanyName()) {
             LOG_FAILURE("Failed to update company name actors");
@@ -799,16 +810,8 @@ Errors SceneRobot::addActorEndEffectorPositionToScene()
 
 Errors SceneRobot::updateActorEndEffectorPosition()
 {
-
     if (m_gui->getPathVisibility()) {
-        m_actorPath->VisibilityOn();
-        Matrix4d m = Matrix4d::Identity();
-        if (nullptr != m_endEffectorNode) {
-          if (NO_ERR != m_endEffectorNode->getFrame(m_endEffectorFrameNumber, m)) {
-              LOG_FAILURE("Failed to get end effector frame");
-              return ERR_INVALID;
-          }
-        }
+        Matrix4d m = m_gui->getKinematics()->getXfmEndEffector();
 
         unsigned int kinCounter = m_gui->getKinematics()->getCounter();
         if (m_kinCounter != kinCounter) {
@@ -822,7 +825,6 @@ Errors SceneRobot::updateActorEndEffectorPosition()
         }
     } else {
         m_currentPointOnPath = 0;
-        m_actorPath->VisibilityOff();
     }
     return NO_ERR;
 }

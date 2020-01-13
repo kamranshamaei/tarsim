@@ -556,11 +556,19 @@ void EitOsMsgServerReceiver::installTool(RequestInstallTool_t &msg)
         return;
     }
 
+    GuiStatusMessage_t in;
+    std::map<int32_t, Collision> collisions;
+    if (NO_ERR != m_kinematics->executeForwardKinematics(in, collisions))
+    {
+        LOG_WARNING("Failed to execute forward kinematics");
+    }
+
     if (NO_ERR != m_gui->installTool(m_cp->getTool())) {
         LOG_FAILURE("Failed to install tool in gui");
         return;
     }
 
+    m_kinematics->incCounter();
 }
 
 } // end of namespace tarsim
