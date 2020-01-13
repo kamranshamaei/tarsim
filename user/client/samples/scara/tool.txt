@@ -66,4 +66,64 @@ appearance {
         }
         opacity: 0.5;
     }
+        lines {
+            from {
+                x: 0.0;
+                y: 200.0;
+                z: 0.0;
+            }
+            to {
+                x: 0.0;
+                y: -200.0;
+                z: 0.0;
+            } 
+            width: 10.0;
+            color {
+                r: 0.92;
+                g: 0.92;
+                b: 0.92;
+            }
+            collision_detection_distance: 100.0;
+        }
+        
+        points {
+            location {
+                x: 0.0;
+                y: 0.0;
+                z: 0.0;
+            }
+            radius: 20.0;
+            color {
+                r: 0.2;
+                g: 0.2;
+                b: 0.2;
+            }
+        }
+        
+        planes {
+            center: {
+                x: 0.0;
+                y: 0.0;
+                z: 0.0;
+            }
+            
+            u: {
+                x: 0.0;
+                y: 0.0;
+                z: 200.0;
+            }
+            
+            v: {
+                x: 0.0;
+                y: 200.0;
+                z: 0.0;
+            }
+            
+            color {
+                r: 1.0;
+                g: 0.0;
+                b: 0.0;
+            }
+            opacity: 0.5;
+        }
 }
