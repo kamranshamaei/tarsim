@@ -41,16 +41,22 @@ sudo ldconfig
 ```
 
 ## Build and Install Tarsim
+Clone, build, and install tarsim as:
+
 ```
+cd /tmp
+git clone https://github.com/kamranshamaei/tarsim.git
 mkdir -p /path/to/build
-Run cmake-gui and point to the build and source folders. Click on configure and generated twice.
+Run cmake-gui and point build to the /path/to/build and source to /tmp/tarsim/src. Click on configure and generated twice.
 cd /path/to/build
 make -j8
 make install
+```
+At this point, you'd have a tarsim folder in your build folder. Copy and paste it to a desired location as /path/to/tarsim.
+```
 echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/path/to/tarsim/lib' >> ~/.bashrc
 source ~/.bashrc
 ```
-At this point, you'd have a tarsim folder in your build folder. Copy and paste it where you'd like to run it.
 
 # Run
 To run tarsim:
