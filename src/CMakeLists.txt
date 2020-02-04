@@ -78,7 +78,6 @@ target_link_libraries(${PRODUCT_NAME} tarsimLib)
 # INSTALL ----------------------------------------------------------------------
 INSTALL(DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} DESTINATION .)
 INSTALL(PROGRAMS ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${PRODUCT_NAME} DESTINATION .)
-INSTALL(PROGRAMS ${CMAKE_SOURCE_DIR}/setup.sh DESTINATION .)
 
 # UNINSTALL --------------------------------------------------------------------
 
