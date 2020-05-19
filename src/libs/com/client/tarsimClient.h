@@ -38,6 +38,7 @@ public:
      * @param priority Server thread policy
      */
     TarsimClient(
+            int32_t index = 0,
             int policy = DEFAULT_RT_THREAD_POLICY,
             int priority = DEFAULT_RT_THREAD_PRIORITY);
 

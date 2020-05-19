@@ -32,13 +32,18 @@ namespace tarsim {
 // ENUMS
 // NAMESPACES AND STRUCTS
 // CLASS DEFINITION
-TarsimClient::TarsimClient(int policy, int priority)
+TarsimClient::TarsimClient(int32_t index, int policy, int priority)
 {
-    std::string userAppReplyMsgQName = FileSystem::getMQNamePid();
+    int32_t process_index = index;
+    if (0 >= process_index) {
+      process_index = FileSystem::getPid();
+    }
+
+    std::string userAppReplyMsgQName = FileSystem::getMQNamePid(process_index);
     mq_unlink(("/" + userAppReplyMsgQName).c_str());
     m_eitOsMsgClientReceiver =
             new EitOsMsgClientReceiver(userAppReplyMsgQName, policy, priority);
-    m_eitOsMsgClientSender = EitOsMsgClientSender::getInstance();
+    m_eitOsMsgClientSender = new EitOsMsgClientSender(process_index);
 }
 
 TarsimClient::~TarsimClient()
@@ -80,7 +85,8 @@ bool TarsimClient::close()
     m_eitOsMsgClientReceiver = nullptr;
 
     printf("Closing sender...\n");
-    m_eitOsMsgClientSender->destroy();
+    delete m_eitOsMsgClientSender;
+    m_eitOsMsgClientSender = nullptr;
 
     printf("Successfully closed TarsimClient\n");
     return true;

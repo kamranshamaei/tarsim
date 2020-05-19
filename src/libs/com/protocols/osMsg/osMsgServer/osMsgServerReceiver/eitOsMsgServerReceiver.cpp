@@ -92,7 +92,7 @@ Errors EitOsMsgServerReceiver::start()
 EitOsMsgServerSender *EitOsMsgServerReceiver::getUserConnection(
         const int32_t userPid )
 {
-	if (userPid <= 0)
+	if (userPid < 0)
 	{
 		return nullptr;
 	}

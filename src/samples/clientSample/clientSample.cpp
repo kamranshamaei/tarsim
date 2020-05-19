@@ -50,15 +50,21 @@ int main(int argc, char **argv)
 {
     // First run Tarsim using a terminal or inside your code
 
-	// Instantiate TarsimClient and connect to Tarsim
-	tarsim::TarsimClient tc;
+	  // Instantiate TarsimClient and connect to Tarsim
+	  tarsim::TarsimClient tc1(1);
+	  tarsim::TarsimClient tc2(2);
     printf("Connecting to Tarsim...\n");
-    if (!tc.connect()) {
+    if (!tc1.connect()) {
       printf("Failed to connect to Tarsim\n");
       return EXIT_FAILURE;
     }
 
-    if (!tc.installTool("tool.txt")) {
+    if (!tc2.connect()) {
+      printf("Failed to connect to Tarsim\n");
+      return EXIT_FAILURE;
+    }
+
+    if (!tc1.installTool("tool.txt")) {
       printf("Failed to install tool\n");
       return EXIT_FAILURE;
     }
@@ -73,26 +79,26 @@ int main(int argc, char **argv)
     int c = 0;
     while (forever) {
         // If you need to get the speed rate from the user, you can get it as:
-    	printf("Running robot at speed rate of %.1f percent\n", tc.getSpeed());
+    	printf("Running robot at speed rate of %.1f percent\n", tc1.getSpeed());
 
         // Lets display a message for the user every 10 sec on Tarsim, each time for 5 sec
         if (0 == c % 1000) {
             std::string txt = "Running Tarsim using TarsimClient";
-            tc.displayMessage(txt.c_str(), tarsim::FaultLevels::FAULT_LEVEL_INFO);
+            tc1.displayMessage(txt.c_str(), tarsim::FaultLevels::FAULT_LEVEL_INFO);
         }
 
         // Check if there is any incremental commands from the user
         int32_t type = -1;
         int32_t index = -1;
         int32_t incCmd = -1;
-        tc.getIncrementalCommand(type, index, incCmd);
+        tc1.getIncrementalCommand(type, index, incCmd);
         if (-1 != incCmd) {
             printf("Incremental Command %d %d %d\n", type, index, incCmd);
         }
 
         // Check for robot self-collisions
         std::vector<std::pair<int32_t, int32_t>> selfCollisions =
-                tc.getSelfCollisions();
+                tc1.getSelfCollisions();
         if (selfCollisions.size() > 0) {
             for (size_t i = 0; i < selfCollisions.size(); i++) {
             printf("Self collision was detected between links %d and %d\n",
@@ -103,7 +109,7 @@ int main(int argc, char **argv)
 
         // Check for robot collisions with external objects
         std::vector<std::pair<int32_t, int32_t>> externalCollisions =
-                tc.getExternalCollisions();
+                tc1.getExternalCollisions();
         if (externalCollisions.size() > 0) {
             for (size_t i = 0; i < externalCollisions.size(); i++) {
             printf("External collision was detected between link %d and object %d\n",
@@ -114,7 +120,7 @@ int main(int argc, char **argv)
 
         // Get current joint values
         tarsim::JointPositions_t jnt;
-        if (!tc.getJointValues(jnt)) {
+        if (!tc1.getJointValues(jnt)) {
             printf("Failed to get joint values\n");
             return EXIT_FAILURE;
         } else {
@@ -130,49 +136,53 @@ int main(int argc, char **argv)
         }
 
         // Send the new set of joint position to Tarsim.
-        if (!tc.sendJointPositions(jnt)) {
+        if (!tc1.sendJointPositions(jnt)) {
+            printf("Failed to send joint values\n");
+        }
+
+        if (!tc2.sendJointPositions(jnt)) {
             printf("Failed to send joint values\n");
         }
 
         // Send a message to Tarsim to execute forward kinematics using the new joint positions
-        if (!tc.executeForwardKinematics()) {
+        if (!tc1.executeForwardKinematics()) {
             printf("Failed to send execute forward kinematics\n");
         }
 
         // Get a rigid body (index of 1 for example) coordinate frame
         tarsim::Frame_t f;
-        if (!tc.getRigidBodyFrame(4, 0, f)) {
+        if (!tc1.getRigidBodyFrame(4, 0, f)) {
             printf("Failed to get rigid body frame\n");
         } else {
             printFrame("Rigid Body", f.mij);
         }
 
         // Get end-effector coordinate frame
-        if (!tc.getEndEffectorFrame(f)) {
+        if (!tc1.getEndEffectorFrame(f)) {
             printf("Failed to get end-effector frame\n");
         } else {
             printFrame("End-Effector", f.mij);
         }
 
         // Get an object's coordinate frame. Here, object 1 is chosen as an example
-        if (!tc.getObjectFrame(7, f)) {
+        if (!tc1.getObjectFrame(7, f)) {
             printf("Failed to get object frame\n");
         } else {
             printFrame("Object", f.mij);
         }
 
         // If you like to lock an object to a robot link (grasp) you can do it as:
-        tc.lockObjectToRigidBody(7, 4);
+        tc1.lockObjectToRigidBody(7, 4);
 
         // If you like to unlock an object from the robot (release) you can do it as:
-        tc.unlockObjectFromRigidBody(7);
+        tc1.unlockObjectFromRigidBody(7);
 
         usleep(100000);
         c++;
     }
 
 //    // Optional: If you like to close tarsim, you can call this
-//    tc.shutdown();
+//    tc1.shutdown();
 
     return EXIT_SUCCESS;
 }
