@@ -32,10 +32,10 @@
 namespace tarsim {
 class EitOsMsgClientSender : MsgQClient
 {
-
 public:
-    static EitOsMsgClientSender * getInstance();
-    void destroy();
+    EitOsMsgClientSender(int32_t index);
+    virtual ~EitOsMsgClientSender();
+
     bool notifyDisconnect(unsigned int msgPriority = DEFAULT_MSG_PRIORITY);
     bool isConnected();
 
@@ -91,21 +91,11 @@ public:
     bool sendRequestInstallTool(
         RequestInstallTool_t &msg,
         unsigned int msgPriority = DEFAULT_MSG_PRIORITY);
-
-    virtual ~EitOsMsgClientSender();
-
 protected:
 
-    EitOsMsgClientSender();
-    // delete copy and move constructors and assign operators
-    EitOsMsgClientSender(EitOsMsgClientSender const&) = delete;             // Copy construct
-    EitOsMsgClientSender(EitOsMsgClientSender&&) = delete;                  // Move construct
-    EitOsMsgClientSender& operator=(EitOsMsgClientSender const&) = delete;  // Copy assign
-    EitOsMsgClientSender& operator=(EitOsMsgClientSender &&) = delete;      // Move assign
 private:
-    static EitOsMsgClientSender *m_instance;
-    static std::mutex          m_mtx;        
     MsgQClient m_msgSender = MsgQClient(RobotJointsReceiverThreadName);
+    int32_t m_index = 0;
 };
 } // end of namespace tarsim
 #endif /* EIT_SENDER_H */
