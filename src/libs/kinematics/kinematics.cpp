@@ -206,7 +206,7 @@ Errors Kinematics::detectCollisionNodeObjects(
                     isCollisionDetected = result;
                     node->setIsCollisionDetected(result);
 
-                    int32_t robotLink = node->getRigidBody().index();
+                    int32_t robotLink = node->getRigidBody()->index();
                     if (m_collisions.find(robotLink) == m_collisions.end()) {
                         Collision collision;
                         collision.robotLink = robotLink;
@@ -282,18 +282,18 @@ Errors Kinematics::detectCollisionNodeNode(
                 node1->setIsCollisionDetected(result);
                 node2->setIsCollisionDetected(result);
 
-                int32_t robotLink = node1->getRigidBody().index();
+                int32_t robotLink = node1->getRigidBody()->index();
                 if (m_collisions.find(robotLink) == m_collisions.end()) {
                     Collision collision;
                     collision.robotLink = robotLink;
-                    collision.rigidBody[0] = node2->getRigidBody().index();
+                    collision.rigidBody[0] = node2->getRigidBody()->index();
                     collision.isSelfCollision[0] = true;
                     collision.numCollisions = 1;
                     m_collisions[robotLink] = collision;
                 } else {
                     Collision collision = m_collisions[robotLink];
                     size_t ind = std::min((size_t)collision.numCollisions, (size_t)(MAX_COLLISIONS));
-                    collision.rigidBody[ind] = node2->getRigidBody().index();
+                    collision.rigidBody[ind] = node2->getRigidBody()->index();
                     collision.isSelfCollision[ind] = true;
                     collision.numCollisions++;
                     m_collisions[robotLink] = collision;
@@ -307,9 +307,9 @@ Errors Kinematics::detectCollisionNodeNode(
 bool Kinematics::isInCollisionDetectionList(Node* node)
 {
     for (size_t i = 0; i < m_cp->getRbs()->collision_detection().self_collisions().size(); i++) {
-        if (node->getRigidBody().index() ==
+        if (node->getRigidBody()->index() ==
                 m_cp->getRbs()->collision_detection().self_collisions(i).first_rigid_body_index() ||
-            node->getRigidBody().index() ==
+            node->getRigidBody()->index() ==
                 m_cp->getRbs()->collision_detection().self_collisions(i).second_rigid_body_index()) {
             return true;
         }
@@ -440,7 +440,7 @@ Errors Kinematics::calculateChildrenXfm(Node* node, Matrix4d &xfmEndEffector)
         Matrix4d xfmNodeToParent;
         if (NO_ERR != calculateNodeToParentXfm(node, xfmNodeToParent)) {
             LOG_FAILURE("Failed to calculate xfm for rigid body %d\n",
-                    node->getRigidBody().index());
+                    node->getRigidBody()->index());
             return ERR_INVALID;
         }
 
@@ -450,8 +450,8 @@ Errors Kinematics::calculateChildrenXfm(Node* node, Matrix4d &xfmEndEffector)
     }
 
     // Get end-effector frame
-    for (unsigned int i = 0; i < node->getRigidBody().frames_size(); i++) {
-        if (node->getRigidBody().frames(i).is_end_effector()) {
+    for (unsigned int i = 0; i < node->getRigidBody()->frames_size(); i++) {
+        if (node->getRigidBody()->frames(i).is_end_effector()) {
             node->getFrame(i, xfmEndEffector);
         }
     }
@@ -461,7 +461,7 @@ Errors Kinematics::calculateChildrenXfm(Node* node, Matrix4d &xfmEndEffector)
         for (unsigned int i = 0; i < node->getChildren().size(); i++) {
             if (NO_ERR != calculateChildrenXfm(node->getChildren().at(i), xfmEndEffector)) {
                 LOG_FAILURE("Failed to calculate children xfm for rigid body %d\n",
-                        node->getChildren().at(i)->getRigidBody().index());
+                        node->getChildren().at(i)->getRigidBody()->index());
                 return ERR_INVALID;
             }
         }
@@ -478,7 +478,7 @@ Errors Kinematics::calculateNodeToParentXfm(
         if (NO_ERR != calculateXfmRevoluteJoint(
                 xfmJmJn, node)) {
             LOG_FAILURE("Failed to calculate revolute joint xfm for rigid body %d\n",
-                    node->getRigidBody().index());
+                    node->getRigidBody()->index());
             return ERR_INVALID;
         }
 
@@ -486,12 +486,12 @@ Errors Kinematics::calculateNodeToParentXfm(
         if (NO_ERR != calculateXfmPrismaticJoint(
                 xfmJmJn, node)) {
             LOG_FAILURE("Failed to calculate prismatic joint xfm for rigid body %d\n",
-                    node->getRigidBody().index());
+                    node->getRigidBody()->index());
             return ERR_INVALID;
         }
     } else {
         LOG_FAILURE("Joint type %d is invalid/unsupported for rigid body %d\n",
-                node->getJointType(), node->getRigidBody().index());
+                node->getJointType(), node->getRigidBody()->index());
         return ERR_INVALID;
     }
 
@@ -750,6 +750,52 @@ Errors Kinematics::installTool()
 {
     m_tool = m_cp->getTool();
     return NO_ERR;
+}
+
+Errors Kinematics::setEndEffector(int32_t robotLink, int32_t linkFrame)
+{
+  if (NO_ERR != setEndEffector(m_root, robotLink, linkFrame)) {
+      LOG_FAILURE("Failed to set end effector on link %d and frame %d",
+          robotLink, linkFrame);
+      return ERR_INVALID;
+  }
+
+  return NO_ERR;
+}
+
+Errors Kinematics::setEndEffector(Node* node, int32_t robotLink, int32_t linkFrame)
+{
+  if (node == nullptr) {
+      LOG_FAILURE("Node is not defined");
+      return ERR_INVALID;
+  }
+  // Calculate the current node transformation matrix
+  if (node != m_root) {
+      if (node->getRigidBody()->index() == robotLink) {
+          for (int i = 0; i < node->getRigidBody()->frames_size(); i++) {
+              if (node->getRigidBody()->frames(i).index() == linkFrame) {
+                  node->getRigidBody()->mutable_frames(i)->set_is_end_effector(true);
+                  return NO_ERR;
+              }
+          }
+      } else {
+          for (int i = 0; i < node->getRigidBody()->frames_size(); i++) {
+              node->getRigidBody()->mutable_frames(i)->set_is_end_effector(false);
+          }
+      }
+  }
+
+  // Calculate the children nodes transformation matrix
+  if (node->getChildren().size() > 0) {
+      for (unsigned int i = 0; i < node->getChildren().size(); i++) {
+          if (NO_ERR != setEndEffector(node->getChildren().at(i), robotLink, linkFrame)) {
+              LOG_FAILURE("Failed to set end effector");
+              return ERR_INVALID;
+          }
+      }
+  }
+
+  return NO_ERR;
 }
 
 } // end of namespace tarsim

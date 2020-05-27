@@ -78,9 +78,11 @@ public:
     std::map<int, Object*> getObjects();
 
     Errors installTool();
+    Errors setEndEffector(int32_t robotLink, int32_t linkFrame);
     // MEMBERS
 private:
     // FUNCTIONS
+    Errors setEndEffector(Node* node, int32_t robotLink, int32_t linkFrame);
     static void* wrapperKinematicsThreadFunction(void* object);
     Errors kinematicsThreadFunction();
     Errors calculateChildrenXfm(Node* node, Matrix4d &xfmEndEffector);

@@ -372,6 +372,15 @@ void EitOsMsgServerReceiver::onMessage(const GenericData_t &inComingData)
         }
         break;
 
+        case SET_END_EFFECTOR:
+        {
+            SetEndEffector_t in;
+            std::memcpy(&in, &inComingData.blobOfData, sizeof(in));
+
+            setEndEffector(in);
+        }
+        break;
+
         case MSG_TIMER_EVENT:
             LOG_INFO("Timer Event in RobotServer.....");
             break;
@@ -569,6 +578,29 @@ void EitOsMsgServerReceiver::installTool(RequestInstallTool_t &msg)
     }
 
     m_kinematics->incCounter();
+}
+
+void EitOsMsgServerReceiver::setEndEffector(SetEndEffector_t &msg)
+{
+  if (NO_ERR != m_kinematics->setEndEffector(msg.robotLink, msg.linkFrame)) {
+      LOG_FAILURE("Failed to install tool in kinematics");
+      return;
+  }
+
+  GuiStatusMessage_t in;
+  std::map<int32_t, Collision> collisions;
+  if (NO_ERR != m_kinematics->executeForwardKinematics(in, collisions))
+  {
+      LOG_WARNING("Failed to execute forward kinematics");
+  }
+
+  if (in.faultLevel > FaultLevels::FAULT_LEVEL_NOFAULT) {
+      m_gui->setStatusMessage(in);
+  }
+
+  sendCollision(collisions);
+
+  m_kinematics->incCounter();
 }
 
 } // end of namespace tarsim

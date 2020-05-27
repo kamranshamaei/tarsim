@@ -413,4 +413,21 @@ bool TarsimClient::installTool(const std::string &name)
     return true;
 }
 
+bool TarsimClient::setEndEffector(
+    int32_t robotLink,
+    int32_t linkFrame,
+    unsigned int msgPriority)
+{
+  SetEndEffector_t msg;
+  msg.msgCounter = getMsgStamp();
+  msg.robotLink = robotLink;
+  msg.linkFrame = linkFrame;
+
+  if (!m_eitOsMsgClientSender->sendSetEndEffector(msg, msgPriority)) {
+      printf("Failed to request tool install\n");
+      return false;
+  }
+  return true;
+}
+
 } // end of namespace tarsim

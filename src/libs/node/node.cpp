@@ -147,9 +147,9 @@ std::vector<Node*> Node::getChildren() const
     return m_children;
 }
 
-RigidBody Node::getRigidBody() const
+RigidBody* Node::getRigidBody()
 {
-    return m_rigidBody;
+    return &m_rigidBody;
 }
 
 std::vector<CoordinateFrame>* Node::getCoordinateFrames()
@@ -449,7 +449,7 @@ Errors Node::mateNode()
             if ((m_mateToParent.sides(bearing_index).rigid_body_index() ==
                     m_rigidBody.index()) &&
                 (m_mateToParent.sides(shaft_index).rigid_body_index() ==
-                    m_parent->getRigidBody().index())) {
+                    m_parent->getRigidBody()->index())) {
 
                 // Find the associated bearing joint among the current
                 // rigid body joints
@@ -464,8 +464,8 @@ Errors Node::mateNode()
 
                 // Find the associated shaft joint among the parent's
                 // rigid body joints
-                for (int i = 0; i < m_parent->getRigidBody().joints_size(); i++) {
-                    Joint it = m_parent->getRigidBody().joints(i);
+                for (int i = 0; i < m_parent->getRigidBody()->joints_size(); i++) {
+                    Joint it = m_parent->getRigidBody()->joints(i);
                     if (it.index() == m_mateToParent.sides(shaft_index).joint_index()) {
                         m_xfm_m_jm = SimXfmToMatrix(it.xfm_joint_to_rigid_body());
                         shaftJointType = it.joint_type();

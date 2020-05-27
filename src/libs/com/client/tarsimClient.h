@@ -304,6 +304,17 @@ public:
      */
     bool installTool(const std::string &name);
 
+    /**
+     * Sets a rigid body on the arm as the end-effector
+     * @param robotLink The index of the link that has the end effector frame
+     * @param linkFrame The index of the end effector frame
+     * @return true if successful, false if it fails
+     */
+    bool setEndEffector(
+        int32_t robotLink,
+        int32_t linkFrame,
+        unsigned int msgPriority = DEFAULT_MSG_PRIORITY);
+
 private:
     /**
      * Returns a time stamp for the message

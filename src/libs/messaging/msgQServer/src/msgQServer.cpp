@@ -119,9 +119,7 @@ Errors MsgQServer::start()
             return ERR_INVALID;
         }
 
-        printf("Failed to create realtime thread %s (error = %d), created non-realtime\n",
-            m_qName.c_str(), ret);
-        printf("Your operating system may not support realtime\n");
+        printf("Create non-realtime thread %s\n", m_qName.c_str());
     }
 
     // Set the thread name

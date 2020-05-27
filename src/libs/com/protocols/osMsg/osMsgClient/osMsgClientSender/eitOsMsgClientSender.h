@@ -91,6 +91,10 @@ public:
     bool sendRequestInstallTool(
         RequestInstallTool_t &msg,
         unsigned int msgPriority = DEFAULT_MSG_PRIORITY);
+
+    bool sendSetEndEffector(
+        SetEndEffector_t &msg,
+        unsigned int msgPriority = DEFAULT_MSG_PRIORITY);
 protected:
 
 private:
