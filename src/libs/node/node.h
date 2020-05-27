@@ -60,7 +60,7 @@ public:
     std::string getName() const;
     Node* getParent() const;
     std::vector<Node*> getChildren() const;
-    RigidBody getRigidBody() const;
+    RigidBody* getRigidBody();
     std::vector<CoordinateFrame>* getCoordinateFrames();
     virtual RigidBodyAppearance getRigidBodyAppearance() const;
     Matrix4d getXfm_jn_n() const;

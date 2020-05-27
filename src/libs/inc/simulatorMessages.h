@@ -208,6 +208,15 @@ struct RequestInstallTool_t : MessageHeader_t
   char toolName[MAX_STATUS_TEXT_SIZE];
 };
 
+/**
+ * Message type used to set the arm end-effector
+ */
+struct SetEndEffector_t : MessageHeader_t
+{
+  int32_t robotLink = -1;
+  int32_t linkFrame = -1;
+};
+
 
 /**
  * Message type used for communication of requesting simulator to shutdown
@@ -318,7 +327,8 @@ enum SimulatorMessageId_t
     GUI_STATUS_MESSAGE,
     SIMULATOR_STATUS,
     SHUTDOWN,
-    INSTALL_TOOL
+    INSTALL_TOOL,
+    SET_END_EFFECTOR,
 };
 } // end of namespace tarsim
 #endif /* SRC_LIBS_INC_SIMULATOR_MESSAGES_H_ */

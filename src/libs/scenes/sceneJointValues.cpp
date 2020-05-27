@@ -204,7 +204,7 @@ Errors SceneJointValues::addActorsSlidersToScene()
         sliderWidget->AddObserver(vtkCommand::InteractionEvent, this,
                 &SceneJointValues::setJointValues);
 
-        m_jointSliders[it->second->getRigidBody().index()] = sliderWidget;
+        m_jointSliders[it->second->getRigidBody()->index()] = sliderWidget;
 
         // CREATE BUTTONS
         for (int i = 0 ; i < m_gui->getConfigParser()->getWin()->joint_values_scene().buttons_size(); i++) {
@@ -237,29 +237,29 @@ Errors SceneJointValues::addActorsSlidersToScene()
 
 
             if (JointIncCmdButtons::INC == index) {
-                m_incButtons[it->second->getRigidBody().index()] = vtkSmartPointer<IncCmdButton>::New();
-                m_incButtons[it->second->getRigidBody().index()]->SetInteractor(m_gui->getRenderWindowInteractor());
-                m_incButtons[it->second->getRigidBody().index()]->SetRepresentation(buttonRepresentation);
-                m_incButtons[it->second->getRigidBody().index()]->SetCurrentRenderer(m_renderer);
-                m_incButtons[it->second->getRigidBody().index()]->On();
-                m_incButtons[it->second->getRigidBody().index()]->setIndex(it->second->getRigidBody().index());
+                m_incButtons[it->second->getRigidBody()->index()] = vtkSmartPointer<IncCmdButton>::New();
+                m_incButtons[it->second->getRigidBody()->index()]->SetInteractor(m_gui->getRenderWindowInteractor());
+                m_incButtons[it->second->getRigidBody()->index()]->SetRepresentation(buttonRepresentation);
+                m_incButtons[it->second->getRigidBody()->index()]->SetCurrentRenderer(m_renderer);
+                m_incButtons[it->second->getRigidBody()->index()]->On();
+                m_incButtons[it->second->getRigidBody()->index()]->setIndex(it->second->getRigidBody()->index());
             } else if (JointIncCmdButtons::DEC == index) {
-                m_decButtons[it->second->getRigidBody().index()] = vtkSmartPointer<IncCmdButton>::New();
-                m_decButtons[it->second->getRigidBody().index()]->SetInteractor(m_gui->getRenderWindowInteractor());
-                m_decButtons[it->second->getRigidBody().index()]->SetRepresentation(buttonRepresentation);
-                m_decButtons[it->second->getRigidBody().index()]->SetCurrentRenderer(m_renderer);
-                m_decButtons[it->second->getRigidBody().index()]->On();
-                m_decButtons[it->second->getRigidBody().index()]->setIndex(it->second->getRigidBody().index());
+                m_decButtons[it->second->getRigidBody()->index()] = vtkSmartPointer<IncCmdButton>::New();
+                m_decButtons[it->second->getRigidBody()->index()]->SetInteractor(m_gui->getRenderWindowInteractor());
+                m_decButtons[it->second->getRigidBody()->index()]->SetRepresentation(buttonRepresentation);
+                m_decButtons[it->second->getRigidBody()->index()]->SetCurrentRenderer(m_renderer);
+                m_decButtons[it->second->getRigidBody()->index()]->On();
+                m_decButtons[it->second->getRigidBody()->index()]->setIndex(it->second->getRigidBody()->index());
             }
 
             // Change bindings.
             switch (index) {
                 case JointIncCmdButtons::INC:
-                    m_incButtons[it->second->getRigidBody().index()]->AddObserver(
+                    m_incButtons[it->second->getRigidBody()->index()]->AddObserver(
                             vtkCommand::StateChangedEvent, this, &SceneJointValues::incJoint);
                     break;
                 case JointIncCmdButtons::DEC:
-                    m_decButtons[it->second->getRigidBody().index()]->AddObserver(
+                    m_decButtons[it->second->getRigidBody()->index()]->AddObserver(
                             vtkCommand::StateChangedEvent, this, &SceneJointValues::decJoint);
                     break;
                 default: {}
@@ -277,7 +277,7 @@ Errors SceneJointValues::updateSliderActors(bool dimsChanged)
         // Update slider dimensions
         vtkSmartPointer<vtkSliderRepresentation2D> sliderRep =
                 vtkSliderRepresentation2D::SafeDownCast(
-                        m_jointSliders[it->second->getRigidBody().index()]->
+                        m_jointSliders[it->second->getRigidBody()->index()]->
                         GetRepresentation());
 
         double jntValue = it->second->getCurrentJointValue();
@@ -315,7 +315,7 @@ Errors SceneJointValues::updateSliderActors(bool dimsChanged)
         // Update slider dimensions
         vtkSmartPointer<vtkSliderRepresentation2D> sliderRep =
                 vtkSliderRepresentation2D::SafeDownCast(
-                        m_jointSliders[it->second->getRigidBody().index()]->
+                        m_jointSliders[it->second->getRigidBody()->index()]->
                         GetRepresentation());
 
         sliderRep->GetPoint1Coordinate()->SetValue(
@@ -345,10 +345,10 @@ Errors SceneJointValues::updateSliderActors(bool dimsChanged)
             vtkSmartPointer<vtkTexturedButtonRepresentation2D> br;
             if (JointIncCmdButtons::INC == index) {
                 br = vtkTexturedButtonRepresentation2D::SafeDownCast(
-                        m_incButtons[it->second->getRigidBody().index()]->GetRepresentation());
+                        m_incButtons[it->second->getRigidBody()->index()]->GetRepresentation());
             } else {
                 br = vtkTexturedButtonRepresentation2D::SafeDownCast(
-                        m_decButtons[it->second->getRigidBody().index()]->GetRepresentation());
+                        m_decButtons[it->second->getRigidBody()->index()]->GetRepresentation());
             }
 
             // Resize on button icon
@@ -397,7 +397,7 @@ void SceneJointValues::setJointValues(
 
         vtkSmartPointer<vtkSliderRepresentation2D> sliderRep =
                 vtkSliderRepresentation2D::SafeDownCast(
-                        m_jointSliders[it->second->getRigidBody().index()]->
+                        m_jointSliders[it->second->getRigidBody()->index()]->
                         GetRepresentation());
 
         it->second->setTargetJointValue(sliderRep->GetValue());

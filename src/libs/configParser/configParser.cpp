@@ -264,12 +264,12 @@ Errors ConfigParser::createChildren(
         if (m_mapMateToNode.count(m_rbs->mates(i).index()) == 0) {
             int childIndex = -1;
             // If the current node the bearing, then the child is the shaft
-            if (currentNode->getRigidBody().index() ==
+            if (currentNode->getRigidBody()->index() ==
                     m_rbs->mates(i).sides(0).rigid_body_index()) {
                 childIndex = m_rbs->mates(i).sides(1).rigid_body_index();
             // Else if the current node is the shaft of the mate, then the child
             // is the bearing side
-            } else if (currentNode->getRigidBody().index() ==
+            } else if (currentNode->getRigidBody()->index() ==
                     m_rbs->mates(i).sides(1).rigid_body_index()) {
                 childIndex = m_rbs->mates(i).sides(0).rigid_body_index();
             }
@@ -308,7 +308,7 @@ Errors ConfigParser::createChildren(
                     // Add the child rigid body to the map so that we know
                     // where it is
                     m_mapRbToNode.insert(std::pair<int, Node*>(
-                            newNode->getRigidBody().index(), newNode));
+                            newNode->getRigidBody()->index(), newNode));
 
                     // Map the mate so that we know where it is when we want
                     // to set the value of the mate
@@ -317,7 +317,7 @@ Errors ConfigParser::createChildren(
 
                     if (createChildren(root, newNode) != NO_ERR) {
                         LOG_FAILURE("Failed to create children for node %d\n",
-                                newNode->getRigidBody().index());
+                                newNode->getRigidBody()->index());
                         return ERR_INVALID;
                     }
                 }
@@ -330,7 +330,7 @@ Errors ConfigParser::createChildren(
 
 bool ConfigParser::isInTree(int index, Node* node)
 {
-    if (node->getRigidBody().index() == index) {
+    if (node->getRigidBody()->index() == index) {
         return true;
     }
 
@@ -397,7 +397,7 @@ void ConfigParser::depthPop( )
 
 void ConfigParser::printTree(Node* node)
 {
-    printf("(%d)\n", node->getRigidBody().index());
+    printf("(%d)\n", node->getRigidBody()->index());
 
     for (unsigned int i = 0; i < node->getChildren().size(); i++) {
         printf("%s └─", m_depth.c_str());
@@ -430,8 +430,8 @@ Errors ConfigParser::findEndEffectorNodeHere(Node* node)
         return ERR_INVALID;
     }
 
-    for (unsigned int i = 0; i < node->getRigidBody().frames_size(); i++) {
-        if (node->getRigidBody().frames(i).is_end_effector()) {
+    for (unsigned int i = 0; i < node->getRigidBody()->frames_size(); i++) {
+        if (node->getRigidBody()->frames(i).is_end_effector()) {
             m_endEffectorNode = node;
             m_endEffectorFrameNumber = i;
             return NO_ERR;
@@ -459,11 +459,13 @@ unsigned int ConfigParser::getEndEffectorFrameNumber()
 
 void ConfigParser::cleanTree()
 {
-    ofstream file;
-    std::string fileName = m_configFolderName + "/"+ k_previousJointValuesFile;
-    file.open (fileName);
-    deleteNodes(m_root, file);
-    file.close();
+    if (m_rbs->should_start_with_previous_joint_values()) {
+        ofstream file;
+        std::string fileName = m_configFolderName + "/"+ k_previousJointValuesFile;
+        file.open (fileName);
+        deleteNodes(m_root, file);
+        file.close();
+    }
 }
 
 void ConfigParser::deleteNodes(Node* node, ofstream &file)

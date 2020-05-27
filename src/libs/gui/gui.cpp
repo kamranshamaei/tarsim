@@ -162,10 +162,9 @@ void Gui::destroy()
 {
     m_updateLock->Lock();
     m_isDestroying = true;
+    m_updateLock->Unlock();
 
     m_renderWindowInteractor->TerminateApp();
-
-    m_updateLock->Unlock();
 }
 
 void Gui::update()

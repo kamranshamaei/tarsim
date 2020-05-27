@@ -59,6 +59,7 @@ private:
 	            EitOsMsgServerSender *sendUserReply, const JointPosition_t& pos);
 
   void installTool(RequestInstallTool_t &msg);
+  void setEndEffector(SetEndEffector_t &msg);
 
 	TimerUtils *m_runTimer = nullptr;
 	Kinematics* m_kinematics = nullptr;
