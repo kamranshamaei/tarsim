@@ -238,7 +238,7 @@ Errors ConfigParser::createRigidBodySystemTree()
 
 Errors ConfigParser::readPreviousJointValues()
 {
-    ifstream file(m_configFolderName + "/"+ k_previousJointValuesFile);
+    std::ifstream file(m_configFolderName + "/"+ k_previousJointValuesFile);
     if (file) {
         if (file.is_open()) {
             std::string indexStr, valueStr;
@@ -460,7 +460,7 @@ unsigned int ConfigParser::getEndEffectorFrameNumber()
 void ConfigParser::cleanTree()
 {
     if (m_rbs->should_start_with_previous_joint_values()) {
-        ofstream file;
+        std::ofstream file;
         std::string fileName = m_configFolderName + "/"+ k_previousJointValuesFile;
         file.open (fileName);
         deleteNodes(m_root, file);
@@ -468,7 +468,7 @@ void ConfigParser::cleanTree()
     }
 }
 
-void ConfigParser::deleteNodes(Node* node, ofstream &file)
+void ConfigParser::deleteNodes(Node* node, std::ofstream &file)
 {
     for (unsigned int i = 0; i < node->getChildren().size(); i++) {
         deleteNodes(node->getChildren().at(i), file);

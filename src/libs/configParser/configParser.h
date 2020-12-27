@@ -71,7 +71,7 @@ private:
     Errors findEndEffectorNode();
     Errors findEndEffectorNodeHere(Node* node);
     void cleanTree();
-    void deleteNodes(Node* node, ofstream &file);
+    void deleteNodes(Node* node, std::ofstream &file);
 
     // MEMBERS
     RigidBodySystem* m_rbs = nullptr;
