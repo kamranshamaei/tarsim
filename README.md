@@ -64,3 +64,11 @@ To run tarsim:
 ```
 /path/to/tarsim/tarsim -c /path/to/robot/rbs.txt
 ``` 
+
+# Docker
+To build and run docker:
+
+```
+docker-compose -f docker-compose.yml up -d tarsim
+docker-compose -f docker-compose.yml exec tarsim bash
+```

@@ -25,7 +25,6 @@
 //INCLUDES
 #include "vtkSmartPointer.h"
 #include "vtkActor.h"
-#include <Eigen>
 #include "eitErrors.h"
 #include "vtkAxesActor.h"
 

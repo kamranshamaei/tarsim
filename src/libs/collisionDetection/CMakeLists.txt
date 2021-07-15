@@ -6,7 +6,6 @@ include_directories(
     ${TARSIM_LIBRARIES_SOURCE_DIRECTORY}/inc
     ${TARSIM_LIBRARIES_SOURCE_DIRECTORY}/inc/protobufs
     ${TARSIM_LIBRARIES_SOURCE_DIRECTORY}/logging/logClient/inc
-    ${THIRDPARTY_SOURCE_DIRECTORY}/eigen/3.3.4/Eigen
     ${TARSIM_LIBRARIES_SOURCE_DIRECTORY}/inc/protobufs
     )
 

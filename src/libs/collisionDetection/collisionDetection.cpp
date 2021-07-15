@@ -333,6 +333,8 @@ double CollisionDetection::minDistanceCapsuleCuboid(
             minDistance = distance;
         }
     }
+
+    return minDistance;
 }
 
 double CollisionDetection::minDistanceSphereSphere(

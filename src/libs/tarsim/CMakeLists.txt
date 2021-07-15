@@ -1,7 +1,6 @@
 project (TarsimProj)
 
 find_package(VTK REQUIRED)
-include(${VTK_USE_FILE})
 
 find_package(Protobuf REQUIRED)
 
@@ -25,7 +24,6 @@ include_directories (
     ${TARSIM_LIBRARIES_SOURCE_DIRECTORY}/gui
     ${TARSIM_LIBRARIES_SOURCE_DIRECTORY}/scenes
     ${TARSIM_LIBRARIES_SOURCE_DIRECTORY}/com 
-    ${THIRDPARTY_SOURCE_DIRECTORY}/eigen/3.3.4/Eigen
     ${TARSIM_LIBRARIES_SOURCE_DIRECTORY}/collisionDetection
     ${CMAKE_PROTOBUF_OUTPUT_DIRECTORY}
     ${VTK_DIR}
@@ -52,6 +50,11 @@ target_link_libraries(tarsimLib
     gui
     exitThread
     logServer)
+# vtk_module_autoinit is needed
+vtk_module_autoinit(
+    TARGETS tarsimLib
+    MODULES ${VTK_LIBRARIES}
+    )
 
 INSTALL(FILES ${TARSIM_LIBRARIES_SOURCE_DIRECTORY}/tarsim/tarsim.h DESTINATION ./user/server/inc)
 INSTALL(DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} DESTINATION ./user/server)

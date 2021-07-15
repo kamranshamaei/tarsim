@@ -92,13 +92,13 @@ ConfigParser::~ConfigParser()
     delete m_tool;
     m_tool = nullptr;
 
+    cleanTree();
+
     delete m_rbs;
     m_rbs = nullptr;
 
     delete m_win;
     m_win = nullptr;
-
-    cleanTree();
 }
 
 Errors ConfigParser::parseRigidBodySystem()

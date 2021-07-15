@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 #include <stdexcept>
-#include <Eigen>
+#include <Eigen/Dense>
 #include "threadQueue.h"
 #include <chrono>
 
@@ -153,7 +153,7 @@ protected:
     mutable std::mutex m_mutexCurrentJointValue;
     ActorsRigidBody* m_actorsRigidBody = nullptr;
 
-    const double k_epsilon = 1e-12;
+    const double k_epsilon = 0.001;
     bool m_isBase = false;
     std::string m_configFolderName = "";
 

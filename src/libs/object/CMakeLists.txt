@@ -2,7 +2,6 @@ project (ObjectProj)
 
 
 find_package(VTK REQUIRED)
-include(${VTK_USE_FILE})
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
@@ -17,7 +16,6 @@ include_directories(
     ${TARSIM_LIBRARIES_SOURCE_DIRECTORY}/collisionDetection
     ${CMAKE_PROTOBUF_OUTPUT_DIRECTORY} 
     
-    ${THIRDPARTY_SOURCE_DIRECTORY}/eigen/3.3.4/Eigen
     ${VTK_INCLUDE_DIRS}
     )
 
@@ -31,3 +29,8 @@ set(FILE_NODE_SRCS
     
 add_library(object ${FILE_NODE_SRCS} ${FILE_NODE_HDRS})
 target_link_libraries(object node logClient ${VTK_LIBRARIES} simProto actorsRigidBody)
+# vtk_module_autoinit is needed
+vtk_module_autoinit(
+    TARGETS object
+    MODULES ${VTK_LIBRARIES}
+    )

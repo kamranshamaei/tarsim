@@ -80,21 +80,6 @@ Tarsim::Tarsim(const std::string &configFolderName,
 
 Tarsim::~Tarsim()
 {
-  destroy();
-}
-
-void Tarsim::start()
-{
-  m_gui->startRenderWindowInteractor();
-}
-
-void Tarsim::update()
-{
-  m_gui->update();
-}
-
-void Tarsim::destroy()
-{
   delete m_logServer;
   m_logServer = nullptr;
 
@@ -110,6 +95,21 @@ void Tarsim::destroy()
   m_gui->destroy();
   delete m_gui;
   m_gui = nullptr;
+}
+
+void Tarsim::start()
+{
+  m_gui->startRenderWindowInteractor();
+}
+
+void Tarsim::update()
+{
+  m_gui->update();
+}
+
+void Tarsim::destroy()
+{
+  m_gui->destroy();
 }
 
 void Tarsim::render()

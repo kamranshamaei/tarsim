@@ -11,7 +11,6 @@ include_directories(
     ${TARSIM_LIBRARIES_SOURCE_DIRECTORY}/com/server
     ${TARSIM_LIBRARIES_SOURCE_DIRECTORY}/inc
     ${TARSIM_LIBRARIES_SOURCE_DIRECTORY}/object
-    ${THIRDPARTY_SOURCE_DIRECTORY}/eigen/3.3.4/Eigen
     )
 
 set(FILE_HDRS 
