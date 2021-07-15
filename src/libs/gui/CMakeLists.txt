@@ -2,7 +2,6 @@ project (GuiProj)
 
 
 find_package(VTK REQUIRED)
-include(${VTK_USE_FILE})
 
 include_directories(
     .
@@ -33,3 +32,8 @@ set(FILE_GUI_SRCS
 add_library(gui ${FILE_GUI_SRCS} ${FILE_GUI_HDRS})
 target_link_libraries(gui logClient ${VTK_LIBRARIES} node sceneBase 
     kinematics configParser)
+# vtk_module_autoinit is needed
+vtk_module_autoinit(
+    TARGETS gui
+    MODULES ${VTK_LIBRARIES}
+    )

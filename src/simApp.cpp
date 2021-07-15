@@ -17,10 +17,17 @@
 #include <cstdarg>
 #include <stdexcept>
 #include <unistd.h>
+#include <signal.h>
 
 #include "tarsim.h"
 #include "ipcMessages.h"
 
+tarsim::Tarsim* sim = nullptr;
+
+void eventHandler(int signal) {
+  printf("Closing simulator\n");
+  sim->destroy();
+}
 
 void print_usage() {
     printf("\nTarsim Usage Options: \n"
@@ -65,15 +72,25 @@ int main(int argc, char **argv)
         }
     }
 
+    struct sigaction sigIntHandler;
+    sigIntHandler.sa_handler = eventHandler;
+    sigemptyset(&sigIntHandler.sa_mask);
+    sigIntHandler.sa_flags = 0;
+    sigaction(SIGINT, &sigIntHandler, nullptr);
 
     try {
-      tarsim::Tarsim sim(configFolderName, policy, priority, msgPriority);
-      sim.start();
+      sim = new tarsim::Tarsim(configFolderName, policy, priority, msgPriority);
+      sim->start();
     } catch (const std::invalid_argument& e) {
       printf("Error: %s\n", e.what());
       printf("For instructions, run with -h option\n");
+      delete sim;
+      sim = nullptr;
       return EXIT_FAILURE;
     }
+
+    delete sim;
+    sim = nullptr;
 
     return EXIT_SUCCESS;
 }

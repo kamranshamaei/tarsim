@@ -5,7 +5,6 @@ endif()
 project (qtTarsim)
 
 find_package(VTK REQUIRED)
-include(${VTK_USE_FILE})
 
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
@@ -22,3 +21,8 @@ qt5_wrap_ui(UISrcs ${UI_FILES})
 add_executable(qtTarsim MACOSX_BUNDLE ${CXX_FILES} ${UISrcs} ${QT_WRAP})
 qt5_use_modules(qtTarsim Core Gui)
 target_link_libraries(qtTarsim tarsimLib ${VTK_LIBRARIES})
+# vtk_module_autoinit is needed
+vtk_module_autoinit(
+    TARGETS qtTarsim
+    MODULES ${VTK_LIBRARIES}
+    )

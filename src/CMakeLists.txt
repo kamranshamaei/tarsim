@@ -27,17 +27,8 @@ options are: None Debug Release RelWithDebInfo MinSizeRel." FORCE )
   set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release")
 endif()
 
-if( NOT RELATIVE_THIRDPARTY_SOURCE_DIRECTORY)
-    SET(RELATIVE_THIRDPARTY_SOURCE_DIRECTORY 
-    "${CMAKE_CURRENT_SOURCE_DIR}/../thirdparty" 
-    CACHE PATH "Relative Thirdparty Source Directory")
-endif()
-get_filename_component(THIRDPARTY_SOURCE_DIRECTORY 
-    "${RELATIVE_THIRDPARTY_SOURCE_DIRECTORY}" ABSOLUTE)
-unset(RELATIVE_THIRDPARTY_SOURCE_DIRECTORY CACHE)
-
+find_package(Eigen3 REQUIRED)
 find_package(VTK REQUIRED)
-include(${VTK_USE_FILE})
 
 find_package(Protobuf REQUIRED)
 
@@ -61,8 +52,8 @@ include_directories (
     ${TARSIM_LIBRARIES_SOURCE_DIRECTORY}/scenes
     ${TARSIM_LIBRARIES_SOURCE_DIRECTORY}/com
     ${TARSIM_LIBRARIES_SOURCE_DIRECTORY}/tarsim 
-    ${THIRDPARTY_SOURCE_DIRECTORY}/eigen/3.3.4/Eigen
     ${CMAKE_PROTOBUF_OUTPUT_DIRECTORY}
+    ${EIGEN3_INCLUDE_DIRS}
     ${VTK_DIR}
     ${VTK_INCLUDE_DIRS}
     ${PROTOBUF_DIR}/include
@@ -74,7 +65,11 @@ add_subdirectory(samples)
 
 add_executable(${PRODUCT_NAME} ./simApp.cpp)
 target_link_libraries(${PRODUCT_NAME} tarsimLib)
-
+# vtk_module_autoinit is needed
+vtk_module_autoinit(
+    TARGETS ${PRODUCT_NAME}
+    MODULES ${VTK_LIBRARIES}
+    )
 # INSTALL ----------------------------------------------------------------------
 INSTALL(DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} DESTINATION .)
 INSTALL(PROGRAMS ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${PRODUCT_NAME} DESTINATION .)

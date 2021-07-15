@@ -1,0 +1,31 @@
+services:
+    tarsim:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        runtime: nvidia
+        privileged: true
+        network_mode: host
+        ipc: host
+        container_name: tarsim
+        environment:
+            DISPLAY: "${DISPLAY}"
+            QT_X11_NO_MITSHM: 1
+            TERM: xterm-256color
+            XAUTHORITY: "$XAUTH"
+            NVIDIA_VISIBLE_DEVICES: all
+            NVIDIA_DRIVER_CAPABILITIES: all
+        volumes:
+            - /tmp/.X11-unix:/tmp/.X11-unix:rw
+            - /dev:/dev
+            - /lib/modules:/lib/modules
+            - /tmp:/tmp:Z
+            - /data:/data
+            - /run/dbus:/run/dbus 
+            - /var/run/dbus:/var/run/dbus 
+            - $HOME/.gitconfig:/home/tarsim/.gitconfig:ro
+            - $HOME/.bash_history:/home/tarsim/.bash_history:z
+            - $HOME/repos/tarsim:/home/tarsim/tarsim:z
+            - $HOME/tarsim-build:/home/tarsim/tarsim-build:z
+        image: tarsim:0.0
+        tty: true

@@ -160,6 +160,8 @@ void Gui::stop(
 
 void Gui::destroy()
 {
+    m_renderWindowInteractor->RemoveObserver(
+        vtkCommand::TimerEvent);
     m_updateLock->Lock();
     m_isDestroying = true;
     m_updateLock->Unlock();
@@ -210,6 +212,7 @@ void Gui::vtkUpdate(
 {
     m_updateLock->Lock();
     if (m_isDestroying) {
+        m_updateLock->Unlock();
         return;
     }
 
@@ -285,6 +288,12 @@ Errors Gui::createRenderWindow()
     m_renderWindow->SetNumberOfLayers(2);
 
     int* screenSize = m_renderWindow->GetScreenSize();
+
+    if (!screenSize) {
+        LOG_FAILURE("No window was created");
+        return ERR_INVALID;
+    }
+
     int w = *screenSize;
     int h = *(screenSize + 1);
     if (m_win->is_full_screen()) {

@@ -26,7 +26,7 @@
 #include "eitErrors.h"
 #include "rbs.pb.h"
 
-#include <Eigen>
+#include <Eigen/Dense>
 
 namespace tarsim {
 // FORWARD DECLARATIONS

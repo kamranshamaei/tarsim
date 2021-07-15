@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 #include <stdexcept>
-#include <Eigen>
+#include <Eigen/Dense>
 #include "threadQueue.h"
 #include "node.h"
 #include <chrono>

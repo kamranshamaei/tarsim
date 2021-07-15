@@ -2,7 +2,6 @@ project (SceneBaseProj)
 
 
 find_package(VTK REQUIRED)
-include(${VTK_USE_FILE})
 
 include_directories(
     .
@@ -47,3 +46,8 @@ set(FILE_GUI_SRCS
 
 add_library(sceneBase ${FILE_GUI_SRCS} ${FILE_GUI_HDRS})
 target_link_libraries(sceneBase logClient ${VTK_LIBRARIES} node eitServer)
+# vtk_module_autoinit is needed
+vtk_module_autoinit(
+    TARGETS sceneBase
+    MODULES ${VTK_LIBRARIES}
+    )
