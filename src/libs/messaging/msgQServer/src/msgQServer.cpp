@@ -167,11 +167,8 @@ Errors MsgQServer::running()
     m_qId = mq_open(m_qName.c_str(), O_CREAT | O_RDONLY, 0644, &m_attr);
     if (-1 == m_qId)
     {
-        if (m_printingStdio)
-        {
-            LOG_FAILURE("Failed to create queue (%s) %d %s \n",m_qName.c_str(), errno,
+        printf("Failed to create queue (%s) %d %s \n",m_qName.c_str(), errno,
                     strerror(errno));
-        }
 
         return ERR_FAILED_SPAWNED;
 
