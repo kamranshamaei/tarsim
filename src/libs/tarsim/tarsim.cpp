@@ -51,8 +51,8 @@ Tarsim::Tarsim(const std::string &configFolderName,
     int counter = 0;
     while (!FileSystem::pathExists("/dev/mqueue/" + LogServerThreadName)) {
         usleep(10);
-        if (counter > 100000) {
-            break;
+        if (counter++ > 100000) {
+            throw std::invalid_argument("Failed to instantiate tarsim logger mq");
         }
     }
     usleep(1000);
