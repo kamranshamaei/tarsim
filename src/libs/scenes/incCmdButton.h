@@ -29,9 +29,9 @@
 #include <vtkCallbackCommand.h>
 #include <vtkButtonWidget.h>
 #include <vtkWidgetCallbackMapper.h>
-#include <vtkMutexLock.h>
+#include <vtkAtomicMutex.h>
 #include <vtkWidgetEvent.h>
-#include <vtkMutexLock.h>
+#include <vtkAtomicMutex.h>
 #include <vtkSmartPointer.h>
 
 namespace tarsim {
@@ -66,8 +66,7 @@ private:
 
     bool m_isPressed = false;
     int32_t m_index = -1;
-    vtkSmartPointer<vtkMutexLock> m_isPressedLock =
-            vtkSmartPointer<vtkMutexLock>::New();
+    vtkAtomicMutex m_isPressedLock;
 };
 } // end of namespace tarsim
 // ENDIF
