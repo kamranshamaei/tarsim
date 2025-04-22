@@ -41,7 +41,7 @@
 #include <vtkCallbackCommand.h>
 #include <vtkButtonWidget.h>
 #include <vtkWidgetCallbackMapper.h>
-#include <vtkMutexLock.h>
+#include <vtkAtomicMutex.h>
 #include <vtkWidgetEvent.h>
 
 namespace tarsim {

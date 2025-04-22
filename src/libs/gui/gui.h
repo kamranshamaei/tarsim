@@ -31,7 +31,7 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkSmartPointer.h>
-#include <vtkMutexLock.h>
+#include <vtkAtomicMutex.h>
 #include <vector>
 #include <map>
 #include <mutex>
@@ -164,32 +164,25 @@ private:
 
     std::vector<SceneBase*> m_scenes {};
 
-    vtkSmartPointer<vtkMutexLock> m_framesVisibilityLock =
-            vtkSmartPointer<vtkMutexLock>::New();
+    vtkAtomicMutex m_framesVisibilityLock;
     bool m_framesVisibility = true;
 
-    vtkSmartPointer<vtkMutexLock> m_planesVisibilityLock =
-            vtkSmartPointer<vtkMutexLock>::New();
+    vtkAtomicMutex m_planesVisibilityLock;
     bool m_planesVisibility = true;
 
-    vtkSmartPointer<vtkMutexLock> m_linesVisibilityLock =
-            vtkSmartPointer<vtkMutexLock>::New();
+    vtkAtomicMutex m_linesVisibilityLock;
     bool m_linesVisibility = true;
 
-    vtkSmartPointer<vtkMutexLock> m_pointsVisibilityLock =
-            vtkSmartPointer<vtkMutexLock>::New();
+    vtkAtomicMutex m_pointsVisibilityLock;
     bool m_pointsVisibility = true;
 
-    vtkSmartPointer<vtkMutexLock> m_cadVisibilityLock =
-            vtkSmartPointer<vtkMutexLock>::New();
+    vtkAtomicMutex m_cadVisibilityLock;
     bool m_cadVisibility = true;
 
-    vtkSmartPointer<vtkMutexLock> m_pathVisibilityLock =
-            vtkSmartPointer<vtkMutexLock>::New();
+    vtkAtomicMutex m_pathVisibilityLock;
     bool m_pathVisibility = true;
 
-    vtkSmartPointer<vtkMutexLock> m_recordRobotSceneLock =
-            vtkSmartPointer<vtkMutexLock>::New();
+    vtkAtomicMutex m_recordRobotSceneLock;
     bool m_recordRobotScene = false;
 
     ThreadQueue<Camera_t>* m_cameraQueue = nullptr;
@@ -206,8 +199,7 @@ private:
 
     int m_windowSize[2] = {0, 0};
 
-    vtkSmartPointer<vtkMutexLock> m_updateLock =
-        vtkSmartPointer<vtkMutexLock>::New();
+    vtkAtomicMutex m_updateLock;
 
     EitOsMsgServerReceiver* m_eitOsMsgServerReceiver = nullptr;
 

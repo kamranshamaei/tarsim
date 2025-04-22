@@ -31,7 +31,7 @@
 #include <vtkActor2D.h>
 #include <vtkButtonWidget.h>
 #include <vtkWidgetCallbackMapper.h>
-#include <vtkMutexLock.h>
+#include <vtkAtomicMutex.h>
 #include <vtkWidgetEvent.h>
 #include "incCmdButton.h"
 

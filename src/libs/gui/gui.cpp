@@ -162,9 +162,9 @@ void Gui::destroy()
 {
     m_renderWindowInteractor->RemoveObserver(
         vtkCommand::TimerEvent);
-    m_updateLock->Lock();
+    m_updateLock.lock();
     m_isDestroying = true;
-    m_updateLock->Unlock();
+    m_updateLock.unlock();
 
     m_renderWindowInteractor->TerminateApp();
 }
@@ -210,15 +210,15 @@ void Gui::vtkUpdate(
         long unsigned int vtkNotUsed(eventId),
         void* vtkNotUsed(callData))
 {
-    m_updateLock->Lock();
+    m_updateLock.lock();
     if (m_isDestroying) {
-        m_updateLock->Unlock();
+        m_updateLock.unlock();
         return;
     }
 
     update();
     m_renderWindow->Render();
-    m_updateLock->Unlock();
+    m_updateLock.unlock();
 }
 
 Errors Gui::setupRecording()
@@ -454,106 +454,106 @@ Errors Gui::updateView()
 
 void Gui::setFramesVisibility(bool framesVisibility)
 {
-    m_framesVisibilityLock->Lock();
+    m_framesVisibilityLock.lock();
     m_framesVisibility = framesVisibility;
-    m_framesVisibilityLock->Unlock();
+    m_framesVisibilityLock.unlock();
 }
 
 bool Gui::getFramesVisibility()
 {
-    m_framesVisibilityLock->Lock();
+    m_framesVisibilityLock.lock();
     bool framesVisibility = m_framesVisibility;
-    m_framesVisibilityLock->Unlock();
+    m_framesVisibilityLock.unlock();
     return framesVisibility;
 }
 
 void Gui::setPlanesVisibility(bool planesVisibility)
 {
-    m_planesVisibilityLock->Lock();
+    m_planesVisibilityLock.lock();
     m_planesVisibility = planesVisibility;
-    m_planesVisibilityLock->Unlock();
+    m_planesVisibilityLock.unlock();
 }
 
 bool Gui::getPlanesVisibility()
 {
-    m_planesVisibilityLock->Lock();
+    m_planesVisibilityLock.lock();
     bool planesVisibility = m_planesVisibility;
-    m_planesVisibilityLock->Unlock();
+    m_planesVisibilityLock.unlock();
     return planesVisibility;
 }
 
 void Gui::setLinesVisibility(bool framesVisibility)
 {
-    m_linesVisibilityLock->Lock();
+    m_linesVisibilityLock.lock();
     m_linesVisibility = framesVisibility;
-    m_linesVisibilityLock->Unlock();
+    m_linesVisibilityLock.unlock();
 }
 
 bool Gui::getLinesVisibility()
 {
-    m_linesVisibilityLock->Lock();
+    m_linesVisibilityLock.lock();
     bool linesVisibility = m_linesVisibility;
-    m_linesVisibilityLock->Unlock();
+    m_linesVisibilityLock.unlock();
     return linesVisibility;
 }
 
 void Gui::setPointsVisibility(bool framesVisibility)
 {
-    m_pointsVisibilityLock->Lock();
+    m_pointsVisibilityLock.lock();
     m_pointsVisibility = framesVisibility;
-    m_pointsVisibilityLock->Unlock();
+    m_pointsVisibilityLock.unlock();
 }
 
 bool Gui::getPointsVisibility()
 {
-    m_pointsVisibilityLock->Lock();
+    m_pointsVisibilityLock.lock();
     bool pointsVisibility = m_pointsVisibility;
-    m_pointsVisibilityLock->Unlock();
+    m_pointsVisibilityLock.unlock();
     return pointsVisibility;
 }
 
 void Gui::setCadVisibility(bool framesVisibility)
 {
-    m_cadVisibilityLock->Lock();
+    m_cadVisibilityLock.lock();
     m_cadVisibility = framesVisibility;
-    m_cadVisibilityLock->Unlock();
+    m_cadVisibilityLock.unlock();
 }
 
 bool Gui::getCadVisibility()
 {
-    m_cadVisibilityLock->Lock();
+    m_cadVisibilityLock.lock();
     bool cadVisibility = m_cadVisibility;
-    m_cadVisibilityLock->Unlock();
+    m_cadVisibilityLock.unlock();
     return cadVisibility;
 }
 
 void Gui::setPathVisibility(bool visibility)
 {
-    m_pathVisibilityLock->Lock();
+    m_pathVisibilityLock.lock();
     m_pathVisibility = visibility;
-    m_pathVisibilityLock->Unlock();
+    m_pathVisibilityLock.unlock();
 }
 
 bool Gui::getPathVisibility()
 {
-    m_pathVisibilityLock->Lock();
+    m_pathVisibilityLock.lock();
     bool visibility = m_pathVisibility;
-    m_pathVisibilityLock->Unlock();
+    m_pathVisibilityLock.unlock();
     return visibility;
 }
 
 void Gui::setRecordRobotScene(bool recordRobotScene)
 {
-    m_recordRobotSceneLock->Lock();
+    m_recordRobotSceneLock.lock();
     m_recordRobotScene = recordRobotScene;
-    m_recordRobotSceneLock->Unlock();
+    m_recordRobotSceneLock.unlock();
 }
 
 bool Gui::getRecordRobotScene()
 {
-    m_recordRobotSceneLock->Lock();
+    m_recordRobotSceneLock.lock();
     bool recordRobotScene = m_recordRobotScene;
-    m_recordRobotSceneLock->Unlock();
+    m_recordRobotSceneLock.unlock();
     return recordRobotScene;
 }
 
@@ -630,7 +630,7 @@ void Gui::setEitOsMsgServerReceiver(EitOsMsgServerReceiver* eitOsMsgServerReceiv
 
 Errors Gui::installTool(Object* tool)
 {
-    m_updateLock->Lock();
+    m_updateLock.lock();
     if (tool->setActorsRigidBody(new ActorsRigidBody(tool))) {
         LOG_FAILURE("Failed to create actors for tool");
         return ERR_INVALID;
@@ -641,20 +641,20 @@ Errors Gui::installTool(Object* tool)
         return ERR_INVALID;
     }
 
-    m_updateLock->Unlock();
+    m_updateLock.unlock();
 
     return NO_ERR;
 }
 
 Errors Gui::removeTool()
 {
-    m_updateLock->Lock();
+    m_updateLock.lock();
     if (NO_ERR != m_scenes[ROBOT]->removeTool()) {
         LOG_FAILURE("Failed to remove tool in robot scene");
         return ERR_INVALID;
     }
 
-    m_updateLock->Unlock();
+    m_updateLock.unlock();
     return NO_ERR;
 }
 

@@ -46,9 +46,9 @@ IncCmdButton::IncCmdButton()
 
 bool IncCmdButton::getIsPressed()
 {
-    m_isPressedLock->Lock();
+    m_isPressedLock.lock();
     bool isPressed = m_isPressed;
-    m_isPressedLock->Unlock();
+    m_isPressedLock.unlock();
     return isPressed;
 }
 
@@ -125,9 +125,9 @@ void IncCmdButton::EndSelectAction(vtkAbstractWidget* w)
 
 void IncCmdButton::setIsPressed(bool isPressed)
 {
-    m_isPressedLock->Lock();
+    m_isPressedLock.lock();
     m_isPressed = isPressed;
-    m_isPressedLock->Unlock();
+    m_isPressedLock.unlock();
 }
 
 void IncCmdButton::setIndex(int32_t index)

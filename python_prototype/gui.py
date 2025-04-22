@@ -127,7 +127,7 @@ def create_camera(camera=Camera()):
 class RigidBodyActors:
     def __init__(self, xfm=Xfm(), points=list(), lines=list(), cad_model=CadModel(), points_size=10,
                  points_color=[1, 1, 1], lines_size=10, lines_color=[1, 1, 1]):
-        self.mutex_xfm = vtk.vtkMutexLock()
+        self.mutex_xfm = vtk.vtkAtomicMutex()
         self.mutex_xfm.Lock()
         self.xfm = copy.deepcopy(xfm)
         self.mutex_xfm.Unlock()
